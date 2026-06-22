@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>PI Dashboard · Mobile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,450;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+<style>
+/* ============================================================
+   PI Dashboard — Mobile (390px) · Inter · Light mode
+   ============================================================ */
+:root{
+  --bg:#F4F6F7; --surface:#FFFFFF; --surface-2:#F8FAFA; --surface-3:#EFF3F3;
+  --ink:#0E1C18; --ink-2:#4A5852; --ink-3:#79857F; --ink-4:#A4AEA9;
+  --line:#E9EDEE; --line-2:#F0F3F3; --line-strong:#DCE2E2;
+  --brand:#0A3A32; --brand-700:#0E4A3F; --brand-600:#14604F; --brand-tint:#EAF2EF; --brand-tint-2:#F3F8F6;
+  --success:#10B981; --success-d:#0C9268; --success-tint:#E7F7F0;
+  --amber:#F59E0B; --amber-d:#CE8108; --amber-tint:#FDF3DE;
+  --coral:#EF4444; --coral-d:#D72F2F; --coral-tint:#FCE8E8;
+  --info:#1184C4; --info-tint:#E4F1F8;
+  --sh-1:0 1px 2px rgba(14,28,24,.04);
+  --sh-2:0 1px 3px rgba(14,28,24,.05),0 4px 12px rgba(14,28,24,.04);
+  --font:"Inter","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;height:auto;}
+body{font-family:var(--font);background:transparent;color:var(--ink);-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.5;font-feature-settings:"cv05" 1,"ss01" 1;}
+.num{font-variant-numeric:tabular-nums;}
+
+.m-app{ max-width:430px; margin:0 auto; padding:0 0 38px; min-height:auto; }
+
+/* ---- header ---- */
+.m-head{ position:sticky; top:0; z-index:30; background:rgba(244,246,247,.86); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); padding:10px 16px 10px; display:flex; align-items:center; gap:11px; border-bottom:1px solid var(--line); }
+.m-mark{ width:34px;height:34px;border-radius:9px;background:var(--brand);display:grid;place-items:center;flex:none; }
+.m-mark svg{width:18px;height:18px;}
+.m-htxt{ flex:1; min-width:0; }
+.m-htxt h1{ font-size:17px;font-weight:800;letter-spacing:-.02em;margin:0;line-height:1.1; }
+.m-htxt .ctx{ font-size:11px;color:var(--brand);font-weight:600;display:block;margin-top:1px; }
+.m-live{ display:inline-flex;align-items:center;gap:5px;font-size:9.5px;font-weight:600;color:var(--success-d);background:var(--success-tint);padding:3px 8px;border-radius:100px; }
+.m-live .led{ width:5px;height:5px;border-radius:50%;background:var(--success); }
+.m-ico{ width:36px;height:36px;border-radius:9px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;position:relative;flex:none;color:var(--ink-2); }
+.m-ico svg{width:17px;height:17px;}
+.m-ico .badge{ position:absolute;top:-4px;right:-4px;min-width:15px;height:15px;padding:0 3px;border-radius:100px;background:var(--coral);color:#fff;font-size:9px;font-weight:700;display:grid;place-items:center;border:2px solid var(--bg); }
+
+/* ---- gerência carousel ---- */
+.m-tabs{ display:flex;gap:8px;overflow-x:auto;padding:13px 16px 14px;scroll-snap-type:x proximity;scroll-padding-left:16px;-webkit-overflow-scrolling:touch; }
+.m-tabs::-webkit-scrollbar{ height:0; }
+.m-tabs::after{ content:"";flex:0 0 4px; }
+.m-chip{ flex:none;scroll-snap-align:start;display:flex;flex-direction:column;gap:2px;min-width:118px;padding:9px 13px;border-radius:10px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--sh-1);cursor:pointer; }
+.m-chip .ct{ display:flex;align-items:center;gap:7px; }
+.m-chip .cc{ font-size:9.5px;font-weight:700;color:var(--ink-4);letter-spacing:.04em; }
+.m-chip .cn{ font-size:13px;font-weight:600;color:var(--ink-2);letter-spacing:-.01em;white-space:nowrap; }
+.m-chip .cd{ width:6px;height:6px;border-radius:50%;margin-left:auto; }
+.m-chip .cs{ font-size:10.5px;color:var(--ink-4);white-space:nowrap; }
+.m-chip.on{ background:var(--brand);border-color:var(--brand); }
+.m-chip.on .cn{ color:#fff; } .m-chip.on .cc{ color:rgba(255,255,255,.55); } .m-chip.on .cs{ color:rgba(255,255,255,.65); }
+.st-ok{background:var(--success);} .st-warn{background:var(--amber);} .st-crit{background:var(--coral);}
+
+/* ---- stage / transition ---- */
+#mStage{ transition:opacity .26s ease, transform .26s ease; }
+#mStage.swap{ opacity:0; transform:translateY(8px); }
+
+/* ---- section label ---- */
+.m-sec{ font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);margin:20px 16px 13px;display:flex;align-items:center;gap:10px; }
+.m-sec .ln{ flex:1;height:1px;background:var(--line); }
+.m-sec .n{ color:var(--ink-4);font-weight:700; }
+
+/* ---- KPIs 2-col ---- */
+.m-kpis{ display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 16px; }
+.m-kpi{ background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--sh-2);padding:13px 14px 12px;display:flex;flex-direction:column;gap:9px;overflow:hidden; }
+.m-kpi.span2{ grid-column:1 / -1; }
+.m-kpi .kl{ font-size:10px;font-weight:600;color:var(--ink-3);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:7px; }
+.m-kpi .ki{ width:24px;height:24px;border-radius:6px;display:grid;place-items:center;flex:none; }
+.m-kpi .ki svg{ width:13px;height:13px; }
+.ico-brand{background:var(--brand-tint);color:var(--brand);} .ico-success{background:var(--success-tint);color:var(--success-d);}
+.ico-amber{background:var(--amber-tint);color:var(--amber-d);} .ico-info{background:var(--info-tint);color:var(--info);} .ico-coral{background:var(--coral-tint);color:var(--coral-d);}
+.m-kpi .kv{ font-size:27px;font-weight:800;letter-spacing:-.03em;line-height:.95;display:flex;align-items:baseline;gap:5px; }
+.m-kpi .kv .pre{ font-size:16px;font-weight:700;color:var(--ink-2); }
+.m-kpi .kv .u{ font-size:11px;font-weight:500;color:var(--ink-3); }
+.m-kpi .kf{ display:flex;align-items:center;gap:8px;flex-wrap:wrap; }
+.delta{ display:inline-flex;align-items:center;gap:3px;white-space:nowrap;font-size:11.5px;font-weight:700;line-height:1;padding:4px 9px;border-radius:7px;letter-spacing:-.01em; }
+.delta svg{ width:12px;height:12px;flex:none; }
+.delta.good{color:var(--success-d);background:var(--success-tint);} .delta.bad{color:var(--coral-d);background:var(--coral-tint);}
+.delta.warn{color:var(--amber-d);background:var(--amber-tint);} .delta.flat{color:var(--ink-3);background:var(--surface-3);}
+.m-kpi .kc{ font-size:10.5px;color:var(--ink-4); }
+.m-kpi .spark{ width:100%;height:34px;display:block; }
+.m-kpi .segb{ display:flex;gap:3px;height:7px; } .m-kpi .segb span{ display:block;height:100%;border-radius:3px; }
+.m-kpi .segl{ display:flex;flex-wrap:wrap;gap:6px 14px;font-size:10.5px;color:var(--ink-2);font-weight:500; }
+.m-kpi .segl i{ width:7px;height:7px;border-radius:2px;display:inline-block;margin-right:5px;vertical-align:middle; }
+
+/* ---- panel (level 2/3 cards) ---- */
+.m-card{ background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--sh-2);margin:0 16px;overflow:hidden; }
+.m-ph{ padding:16px 16px 13px; }
+.m-ph .pt{ font-size:15px;font-weight:700;letter-spacing:-.015em; }
+.m-ph .ps{ font-size:11.5px;color:var(--ink-3);margin-top:3px; }
+.m-legend{ display:flex;flex-wrap:wrap;gap:8px 16px;padding:0 16px 10px; }
+.m-legend .lg{ display:inline-flex;align-items:center;gap:7px;font-size:11.5px;color:var(--ink-2);font-weight:500; }
+.m-legend .lg .sw{ width:12px;height:12px;border-radius:3px; } .m-legend .lg .ln{ width:16px;border-top:2.5px solid;border-radius:2px; }
+
+/* horizontal scroll chart */
+.m-hscroll{ overflow-x:auto;-webkit-overflow-scrolling:touch;padding:2px 16px 6px;position:relative; }
+.m-hscroll::-webkit-scrollbar{ height:5px; } .m-hscroll::-webkit-scrollbar-thumb{ background:var(--line-strong);border-radius:3px; }
+.m-hint{ display:flex;align-items:center;justify-content:center;gap:6px;font-size:10.5px;color:var(--ink-4);padding:0 0 12px;font-weight:500; }
+.m-hint svg{ width:13px;height:13px; }
+.m-foot{ display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);border-top:1px solid var(--line-2); }
+.m-foot .sc{ background:var(--surface);padding:12px 16px;display:flex;flex-direction:column;gap:2px; }
+.m-foot .sc b{ font-size:16px;font-weight:700;letter-spacing:-.02em; } .m-foot .sc span{ font-size:10px;color:var(--ink-3); }
+
+/* donut vertical */
+.m-donut{ display:flex;flex-direction:column;align-items:center;padding:8px 16px 4px;gap:6px; }
+.m-donut > svg{ width:128px;height:128px; }
+.m-donut .dlbl{ font-size:11px;color:var(--ink-3); } .m-donut .dval{ font-size:16px;font-weight:700;letter-spacing:-.02em; }
+.m-complist{ padding:6px 16px 16px; }
+.m-comprow{ display:grid;grid-template-columns:10px 1fr auto auto;align-items:center;gap:11px;padding:11px 0;border-top:1px solid var(--line-2);font-size:12.5px; }
+.m-comprow:first-child{ border-top:0; }
+.m-comprow .dc{ width:9px;height:9px;border-radius:3px; } .m-comprow .nm{ color:var(--ink-2);font-weight:500; }
+.m-comprow .vv{ font-weight:600; } .m-comprow .pp{ font-size:11px;color:var(--ink-4);width:38px;text-align:right;font-weight:600; }
+
+/* matrix mobile */
+.m-mx{ padding:14px 16px 16px; }
+.m-mxplot{ display:grid;grid-template-columns:20px 1fr;gap:9px; }
+.m-mxy{ writing-mode:vertical-rl;transform:rotate(180deg);text-align:center;font-size:9.5px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em; }
+.m-mxgrid{ display:grid;grid-template-columns:54px 1fr 1fr 1fr;gap:7px; }
+.m-mxrl{ display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-size:11px;font-weight:600;color:var(--ink-2); }
+.m-mxcell{ min-height:58px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;border:1px solid transparent; }
+.m-mxcell b{ font-size:22px;font-weight:800;letter-spacing:-.03em;line-height:1; } .m-mxcell span{ font-size:8.5px;font-weight:700;text-transform:uppercase;opacity:.8; }
+.m-mxcl{ font-size:10.5px;font-weight:600;color:var(--ink-2);text-align:center; }
+.m-mxx{ grid-column:2 / -1;text-align:center;font-size:9.5px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em;padding-top:8px; }
+.mx-z-low{background:var(--success-tint);color:var(--success-d);border-color:rgba(16,185,129,.2);}
+.mx-z-mid{background:var(--amber-tint);color:var(--amber-d);border-color:rgba(245,158,11,.22);}
+.mx-z-high{background:var(--coral-tint);color:var(--coral-d);border-color:rgba(239,68,68,.22);}
+.m-mxscale{ display:flex;flex-wrap:wrap;gap:10px 14px;padding:14px 0 0 30px; }
+.m-mxscale span{ display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--ink-2);font-weight:500; } .m-mxscale i{ width:10px;height:10px;border-radius:3px; }
+
+/* bad actors vertical cards */
+.m-bt{ padding:12px 16px 16px;display:flex;flex-direction:column;gap:10px; }
+.m-btc{ border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--surface-2); }
+.m-bttop{ display:flex;align-items:center;gap:11px; }
+.m-btr{ width:24px;height:24px;border-radius:7px;background:var(--surface-3);color:var(--ink-2);font-weight:700;font-size:12px;display:grid;place-items:center;flex:none; }
+.m-btn{ flex:1;min-width:0; } .m-btn b{ font-size:13.5px;font-weight:600;display:block; } .m-btn span{ font-size:11px;color:var(--ink-4); }
+.m-btv{ text-align:right;flex:none; } .m-btv b{ font-size:14px;font-weight:700;letter-spacing:-.02em; } .m-btv span{ font-size:10px;color:var(--ink-4);display:block; }
+.m-btbar{ margin-top:9px;height:5px;border-radius:3px;background:var(--surface-3);overflow:hidden; } .m-btbar i{ display:block;height:100%;border-radius:3px; }
+
+.m-note{ padding:2px 16px 16px;font-size:11.5px;color:var(--ink-3);display:flex;align-items:center;gap:8px; } .m-note .dot{ width:7px;height:7px;border-radius:50%;background:var(--success); }
+
+/* gantt mobile — sticky first column */
+.m-gantt{ overflow:hidden; }
+.m-gchips{ display:flex;flex-wrap:wrap;gap:7px;padding:0 16px 12px; }
+.m-gchip{ display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:600;color:var(--ink-2);padding:5px 9px;border-radius:7px;border:1px solid var(--line); }
+.m-gchip .ct{ width:7px;height:7px;border-radius:2px; }
+.mg-scroll{ overflow-x:auto;-webkit-overflow-scrolling:touch;border-top:1px solid var(--line); }
+.mg-scroll::-webkit-scrollbar{ height:5px; } .mg-scroll::-webkit-scrollbar-thumb{ background:var(--line-strong);border-radius:3px; }
+.mg-inner{ --lab:148px; min-width:600px; }
+.mg-head{ display:grid;grid-template-columns:var(--lab) 1fr;background:var(--surface-2);border-bottom:1px solid var(--line); }
+.mg-corner{ position:sticky;left:0;z-index:3;background:var(--surface-2);padding:9px 14px;font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);border-right:1px solid var(--line); }
+.mg-months{ display:grid;grid-template-columns:repeat(4,1fr); }
+.mg-month{ padding:8px 0 7px 10px;font-size:10.5px;font-weight:600;color:var(--ink-2);border-right:1px solid var(--line-2); } .mg-month:last-child{border-right:0;} .mg-month span{ font-size:9px;color:var(--ink-4);display:block; }
+.mg-row{ display:grid;grid-template-columns:var(--lab) 1fr;border-top:1px solid var(--line-2);position:relative; } .mg-row:first-child{border-top:0;}
+.mg-lab{ position:sticky;left:0;z-index:2;background:var(--surface);padding:0 12px;border-right:1px solid var(--line);display:flex;align-items:center;gap:9px;min-height:50px; }
+.mg-lab .gi{ width:26px;height:26px;border-radius:7px;display:grid;place-items:center;flex:none; } .mg-lab .gi svg{ width:13px;height:13px; }
+.mg-lab .gt b{ font-size:12px;font-weight:600;display:block;line-height:1.2; } .mg-lab .gt span{ font-size:10px;color:var(--ink-4); }
+.mg-track{ position:relative;min-height:50px; }
+.mg-bar{ position:absolute;top:50%;transform:translateY(-50%);height:18px;border-radius:5px;display:flex;overflow:hidden;box-shadow:var(--sh-1); }
+.gseg{ height:100%; }
+.gseg-done{background:var(--success);} .gseg-prog{background:repeating-linear-gradient(135deg,var(--brand-600),var(--brand-600) 6px,var(--brand-700) 6px,var(--brand-700) 12px);}
+.gseg-warn{background:var(--amber);} .gseg-late{background:repeating-linear-gradient(135deg,var(--coral),var(--coral) 6px,var(--coral-d) 6px,var(--coral-d) 12px);} .gseg-plan{background:var(--surface-3);border:1px dashed var(--line-strong);}
+.mg-pct{ position:absolute;right:0;top:50%;transform:translate(calc(100% + 8px),-50%);font-size:10px;font-weight:600;color:var(--ink-3);white-space:nowrap; } .mg-pct.bad{color:var(--coral-d);}
+.mg-mile{ position:absolute;top:50%;width:13px;height:13px;transform:translate(-50%,-50%) rotate(45deg);border-radius:3px;background:var(--brand);z-index:1; }
+.mg-today{ position:absolute;top:0;bottom:0;width:2px;background:var(--brand);z-index:2; }
+
+.m-footnote{ padding:22px 16px 8px;font-size:10.5px;color:var(--ink-4);text-align:center; }
+
+/* ============================================================
+   HORIZONTAL LAYOUT — economiza espaço vertical
+   ============================================================ */
+
+/* donut horizontal: gráfico à esq, dados à dir */
+.m-donut-h{ display:flex; align-items:center; gap:16px; padding:12px 16px 4px; }
+.m-donut-h > svg{ width:108px; height:108px; flex:none; }
+.m-donut-h .d-info{ flex:1; min-width:0; display:flex; flex-direction:column; gap:4px; }
+.m-donut-h .dlbl{ font-size:10px; color:var(--ink-3); }
+.m-donut-h .dval{ font-size:15px; font-weight:700; letter-spacing:-.02em; }
+
+/* KPI span2 horizontal: número à esq, spark/seg à dir */
+.m-kpi.span2.kpi-h{ flex-direction:row; align-items:center; gap:14px; }
+.m-kpi.span2.kpi-h .kpi-left{ flex:1; min-width:0; display:flex; flex-direction:column; gap:6px; }
+.m-kpi.span2.kpi-h .kpi-right{ flex:0 0 110px; display:flex; flex-direction:column; gap:6px; }
+.m-kpi.span2.kpi-h .spark{ width:100%; height:38px; }
+
+/* ============================================================
+   IPHONE MOCKUP
+   ============================================================ */
+body.mockup-mode {
+  min-height: unset;
+  height: 858px; /* 826px shell + 16px topo + 16px base */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 0;
+
+  background: transparent;
+  position: relative;
+}
+
+
+
+/* garantir que o shell fique acima do grain */
+.iphone-shell {
+  position: relative;
+  z-index: 1;
+}
+.iphone-shell { position:relative; width:393px; flex:none; }
+.iphone-body {
+  position:relative; width:393px;
+  background:#1C1C1E; border-radius:54px;
+  box-shadow: 0 0 0 1.5px #3a3a3c, 0 0 0 3px #2c2c2e,
+    0 30px 80px rgba(0,0,0,.7), 0 10px 30px rgba(0,0,0,.4),
+    inset 0 0 0 1px rgba(255,255,255,.08);
+  padding:16px;
+}
+.iphone-screen { border-radius:40px; overflow:hidden; background:#F4F6F7; position:relative; height:760px; }
+.iphone-scroll { width:100%; height:100%; overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch; scrollbar-width:thin; scrollbar-color:rgba(14,28,24,.22) transparent; }
+.iphone-scroll::-webkit-scrollbar { width:3px; }
+.iphone-scroll::-webkit-scrollbar-track { background:transparent; }
+.iphone-scroll::-webkit-scrollbar-thumb { background:rgba(14,28,24,.22); border-radius:3px; }
+.dynamic-island {
+  position:absolute; top:14px; left:50%; transform:translateX(-50%);
+  width:120px; height:34px; background:#1C1C1E; border-radius:20px;
+  z-index:100; box-shadow:0 0 0 1px rgba(255,255,255,.06);
+}
+.iphone-statusbar {
+  height:59px; background:rgba(244,246,247,.95);
+  display:flex; align-items:flex-end; justify-content:space-between;
+  padding:0 28px 10px; position:sticky; top:0; z-index:50; flex:none;
+}
+.iphone-statusbar .time { font-size:15px; font-weight:600; color:var(--ink); letter-spacing:-.02em; }
+.iphone-statusbar .icons { display:flex; align-items:center; gap:6px; }
+.btn-side { position:absolute; background:#2c2c2e; border-radius:3px; box-shadow:inset 0 0 0 .5px rgba(255,255,255,.1); }
+.btn-side.vol-up { left:-4px; top:140px; width:4px; height:38px; }
+.btn-side.vol-dn { left:-4px; top:192px; width:4px; height:38px; }
+.btn-side.silent  { left:-4px; top:96px; width:4px; height:28px; }
+.btn-side.power   { right:-4px; top:156px; width:4px; height:64px; }
+.iphone-home { height:34px; display:flex; align-items:center; justify-content:center; flex:none; }
+.iphone-home-bar { width:134px; height:5px; background:var(--ink); border-radius:3px; opacity:.2; }
+
+/* ---- section accordions (progressive disclosure) ---- */
+.m-accs-h{ width:calc(100% - 32px); margin:20px 16px 13px; padding:0; border:0; background:transparent; cursor:pointer; display:flex; align-items:center; gap:10px; font-family:var(--font); }
+.m-accs-h .nm{ font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-3); }
+.m-accs-h .ln{ flex:1; height:1px; background:var(--line); }
+.m-accs-h .n{ font-size:11px; font-weight:700; color:var(--ink-4); }
+.m-accs-h .chev{ width:17px; height:17px; color:var(--ink-3); flex:none; transition:transform .3s ease; }
+.m-accs.open .m-accs-h .chev{ transform:rotate(180deg); }
+.m-acc-b{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .3s ease; }
+.m-accs.open .m-acc-b{ grid-template-rows:1fr; }
+.m-acc-inner{ overflow:hidden; min-height:0; }
+.m-acc-inner #mSide{ display:block; margin-top:14px; }
+
+/* ---- gantt → milestone list (mobile) ---- */
+.m-mscap{ padding:0 16px 12px;font-size:11.5px;color:var(--ink-3);display:flex;align-items:center;gap:8px;font-weight:500; }
+.m-mscap .pchip{ font-size:10px;font-weight:700;color:var(--brand);background:var(--brand-tint);padding:3px 9px;border-radius:100px;letter-spacing:.02em; }
+.m-mslist{ padding:2px 16px 14px;border-top:1px solid var(--line); }
+.m-ms{ display:grid;grid-template-columns:20px 1fr;gap:13px; }
+.m-ms-rail{ position:relative;display:flex;justify-content:center; }
+.m-ms-rail::before{ content:"";position:absolute;top:0;bottom:0;width:2px;background:var(--line);border-radius:2px; }
+.m-ms:first-child .m-ms-rail::before{ top:24px; }
+.m-ms:last-child .m-ms-rail::before{ bottom:auto;height:24px; }
+.m-ms-dot{ position:relative;z-index:1;width:13px;height:13px;border-radius:50%;margin-top:18px;border:3px solid var(--surface);box-shadow:0 0 0 1px var(--line); }
+.m-ms-card{ padding:13px 0 15px;min-width:0; }
+.m-ms-top{ display:flex;align-items:center;gap:9px;justify-content:space-between; }
+.m-ms-tt{ display:flex;align-items:center;gap:9px;min-width:0; }
+.m-ms-ico{ width:26px;height:26px;border-radius:7px;display:grid;place-items:center;flex:none; } .m-ms-ico svg{ width:13px;height:13px; }
+.m-ms-tt b{ font-size:13px;font-weight:600;letter-spacing:-.01em;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.m-ms-badge{ flex:none;font-size:9px;font-weight:700;padding:3px 8px;border-radius:100px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap; }
+.b-done{ background:var(--success-tint);color:var(--success-d); } .b-prog{ background:var(--brand-tint);color:var(--brand); }
+.b-warn{ background:var(--amber-tint);color:var(--amber-d); } .b-late{ background:var(--coral-tint);color:var(--coral-d); } .b-plan{ background:var(--surface-3);color:var(--ink-3); }
+.m-ms-meta{ font-size:11px;color:var(--ink-4);margin:6px 0 0 35px; }
+.m-ms-prog{ display:flex;align-items:center;gap:10px;margin:9px 0 0 35px; }
+.m-ms-prog .bar{ flex:1;height:5px;border-radius:3px;background:var(--surface-3);overflow:hidden; } .m-ms-prog .bar i{ display:block;height:100%;border-radius:3px; }
+.m-ms-prog .pct{ font-size:11px;font-weight:600;color:var(--ink-3);white-space:nowrap; } .m-ms-prog .pct.bad{ color:var(--coral-d); }
+
+</style>
+</head>
+<body data-g="g1" class="mockup-mode">
+
+<!-- ═══════════════ iPHONE SHELL ═══════════════ -->
+<div class="iphone-shell">
+  <div class="iphone-body">
+    <div class="btn-side silent"></div>
+    <div class="btn-side vol-up"></div>
+    <div class="btn-side vol-dn"></div>
+    <div class="btn-side power"></div>
+    <div class="iphone-screen">
+      <div class="dynamic-island"></div>
+      <div class="iphone-scroll">
+        <div class="iphone-statusbar">
+          <span class="time">14:38</span>
+          <div class="icons">
+            <svg viewBox="0 0 17 12" fill="currentColor"><rect x="0" y="4" width="3" height="8" rx=".8"/><rect x="4.5" y="2.5" width="3" height="9.5" rx=".8"/><rect x="9" y="1" width="3" height="11" rx=".8"/><rect x="13.5" y="0" width="3" height="12" rx=".8" opacity=".3"/></svg>
+            <svg viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M1 4.5C3.8 1.8 7.2.5 8 .5s4.2 1.3 7 4"/><path d="M3.5 7C5 5.5 6.5 4.8 8 4.8s3 .7 4.5 2.2"/><path d="M6 9.5C6.8 8.7 7.4 8.4 8 8.4s1.2.3 2 1.1"/><circle cx="8" cy="11.5" r=".8" fill="currentColor" stroke="none"/></svg>
+            <svg viewBox="0 0 25 12" fill="currentColor"><rect x="0" y=".5" width="22" height="11" rx="2.5" stroke="currentColor" stroke-width="1.2" fill="none"/><rect x="1.2" y="1.7" width="18" height="8.6" rx="1.5"/><path d="M23 4v4a2 2 0 0 0 0-4z" opacity=".4"/></svg>
+          </div>
+        </div>
+<div class="m-app">
+
+    <header class="m-head">
+      <div class="m-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 5 9c-2 2-2 6 0 8a5 5 0 0 0 7 1 5 5 0 0 0 7-1c2-2 2-6 0-8z"/><path d="M9 14h6"/></svg>
+      </div>
+      <div class="m-htxt">
+        <h1>Visão Geral</h1>
+        <span class="ctx">Gerência 1</span>
+      </div>
+      <span class="m-live"><span class="led"></span>AO VIVO</span>
+      <button class="m-ico" aria-label="Notificações">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+        <span class="badge">3</span>
+      </button>
+    </header>
+
+    <nav class="m-tabs" id="mTabs"></nav>
+
+    <div id="mStage">
+      <section class="m-accs open" id="acc1kpi">
+        <button class="m-accs-h" type="button" id="acc1btn"><span class="nm">Indicadores</span><span class="ln"></span><span class="n">01</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="m-acc-b"><div class="m-acc-inner"><section class="m-kpis" id="mKpis" style="padding:4px 16px 8px"></section></div></div>
+      </section>
+
+      <div id="mAcc"></div>
+
+      <div class="m-footnote">PI Dashboard · sync 14:38 · SCADA + ERP</div>
+    </div>
+
+  </div><!-- /m-app -->
+      </div><!-- /iphone-scroll -->
+      <div class="iphone-home"><div class="iphone-home-bar"></div></div>
+    </div><!-- /iphone-screen -->
+  </div><!-- /iphone-body -->
+</div><!-- /iphone-shell -->
+
+<script>
+/* ============================================================
+   PI Dashboard v2 — context data for 4 gerências
+   Each gerência drives KPIs, central chart, side donut, Gantt.
+   ============================================================ */
+window.MESES = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+
+window.DATA = {
+
+  /* ===================== G1 · PRODUÇÃO ===================== */
+  g1: {
+    tab: "g1",
+    context: "Gerência 1",
+    kpis: [
+      { label: "Indicador 1", ico: "drop", tone: "brand", value: "288", unit: "mil un./d",
+        variant: "spark", color: "brand", spark: [231,242,228,238,255,263,271,258,276,288],
+        delta: { val: "4.2%", dir: "up", tone: "good" }, cmp: "vs. ontem · meta 280" },
+      { label: "Indicador 2", ico: "bars", tone: "success", value: "96.1", unit: "%",
+        variant: "spark", color: "success", spark: [91.8,92.6,93.1,91.8,94.2,95,93.6,94.8,95.4,96.1],
+        delta: { val: "1.8 pp", dir: "up", tone: "good" }, cmp: "7 unidades · sistema estável" },
+      { label: "Indicador 3", ico: "fuel", tone: "amber", value: "14.2", unit: "mil un./h",
+        variant: "spark", color: "amber-d", spark: [16.1,15.8,15.2,15.6,14.9,15.1,14.6,14.8,14.4,14.2],
+        delta: { val: "3.1%", dir: "down", tone: "good" }, cmp: "economia vs. previsto" },
+      { label: "Indicador 4", ico: "truck", tone: "info", value: "84", unit: "/ 96 em rota",
+        variant: "seg", seg: [ {flex:84,color:"success",label:"84 ativos"}, {flex:9,color:"amber",label:"9 manut."}, {flex:3,color:"coral",label:"3 parados"} ] },
+      { label: "Indicador 5", ico: "alert", tone: "coral", value: "07", unit: "alertas ativos",
+        variant: "seg", seg: [ {flex:2,color:"coral",label:"2 críticos"}, {flex:3,color:"amber",label:"3 atenção"}, {flex:2,color:"info",label:"2 info"} ] },
+    ],
+    chart: {
+      title: "Volume Mensal · Meta vs. Realizado",
+      sub: "Volume consolidado (mil un.) e eficiência operacional — 2026",
+      left: { min: 0, max: 320, step: 80 },
+      right: { min: 80, max: 100, step: 5, suffix: "%", color: "success" },
+      bars: [ { key: "real", label: "Realizado", color: "brandGrad", unit: "mil un.",
+                data: [182,176,201,214,198,231,242,228,263,271,258,288] } ],
+      ghost: { label: "Meta", color: "amber-d", dashed: true, unit: "mil un.",
+               data: [190,190,205,210,210,225,235,240,255,260,265,280] },
+      lines: [ { key: "efic", label: "Eficiência operacional (%)", color: "success", axis: "right", unit: "%",
+                 data: [88.2,86.5,90.1,91.4,89,92.6,93.1,91.8,94.2,95,93.6,96.1] } ],
+      hilite: 8,
+      foot: [ {b:"2.752",s:"Acum. realizado · mil un."}, {b:"+3.4%",s:"Acima da meta anual",c:"success-d"},
+              {b:"91.7%",s:"Efic. média operacional"}, {b:"288",s:"Pico — Dez/2026",c:"brand"} ]
+    },
+    donut: {
+      title: "Distribuição por Modal", sub: "Distribuição mensal",
+      center: "1.84M", centerSub: "un. / mês",
+      sideLbl: "Volume total escoado", sideVal: "1.842.300 un.",
+      delta: { val: "5.6% no mês", dir: "up", tone: "good" },
+      segs: [ {nm:"Modal 1", vv:"773.766", pp:42, color:"brand"},
+              {nm:"Modal 2", vv:"497.421", pp:27, color:"success"},
+              {nm:"Modal 3", vv:"350.037", pp:19, color:"amber"},
+              {nm:"Modal 4", vv:"221.076", pp:12, color:"info"} ]
+    },
+    gantt: {
+      title: "Cronograma de Operações — 2º Trimestre",
+      sub: "Manutenção, operação e logística · 7 frentes ativas",
+      col: "Frente / Área",
+      rows: [
+        { ico:"refine", tone:"brand", title:"Unidade 01", sub:"Parada programada", own:"R1",
+          bar:{ left:4, width:38, segs:[{t:"done",w:58},{t:"prog",w:30},{t:"plan",w:12}], pct:"78%" } },
+        { ico:"flow", tone:"success", title:"Linha 02", sub:"Escoamento contínuo", own:"R2",
+          bar:{ left:0, width:96, segs:[{t:"done",w:30},{t:"prog",w:70}], pct:"31%" }, miles:[50] },
+        { ico:"wrench", tone:"info", title:"Manut. Preventiva", sub:"Equipamento 03", own:"R3",
+          bar:{ left:28, width:20, segs:[{t:"done",w:100}], pct:"100%" } },
+        { ico:"alert", tone:"coral", title:"Inspeção regulatória", sub:"Equipamento crítico · atraso", own:"R4",
+          bar:{ left:16, width:24, segs:[{t:"done",w:40},{t:"warn",w:25},{t:"late",w:35}], pct:"48% · atraso 6d", pctBad:true } },
+        { ico:"truck", tone:"info", title:"Logística de Frota", sub:"Rota A · Base 1 → Base 2", own:"R5",
+          bar:{ left:38, width:34, segs:[{t:"done",w:35},{t:"prog",w:45},{t:"warn",w:20}], pct:"62%" } },
+        { ico:"fuel", tone:"amber", title:"Operação 05", sub:"Reabastecimento · Base 1", own:"R6",
+          bar:{ left:10, width:16, segs:[{t:"done",w:100}], pct:"100%" }, miles:[26] },
+        { ico:"tank", tone:"brand", title:"Operação 06", sub:"Terminal C · planejado", own:"R7",
+          bar:{ left:64, width:30, segs:[{t:"plan",w:100}], pct:"planejado · Q3", plan:true } },
+      ]
+    }
+  },
+
+  /* ===================== G2 · REFINO ===================== */
+  g2: {
+    tab: "g2",
+    context: "Gerência 2",
+    kpis: [
+      { label: "Indicador 1", ico: "refine", tone: "brand", value: "412", unit: "mil un./d",
+        variant: "spark", color: "brand", spark: [388,395,402,398,405,410,408,415,409,412],
+        delta: { val: "2.8%", dir: "up", tone: "good" }, cmp: "vs. mês anterior" },
+      { label: "Indicador 2", ico: "bars", tone: "success", value: "93.4", unit: "%",
+        variant: "spark", color: "success", spark: [91,90.5,92,92.5,91.8,93,93.4,92.8,93.6,93.4],
+        delta: { val: "0.6 pp", dir: "up", tone: "good" }, cmp: "8 unidades · sistema ótimo" },
+      { label: "Indicador 3", ico: "fuel", tone: "amber", value: "89.6", unit: "%",
+        variant: "spark", color: "amber-d", spark: [86,86.8,87.5,88,88.4,88.9,89,89.3,89.5,89.6],
+        delta: { val: "1.3 pp", dir: "up", tone: "good" }, cmp: "vs. meta operacional" },
+      { label: "Indicador 4", ico: "check", tone: "success", value: "97.1", unit: "%",
+        variant: "spark", color: "success", spark: [94,94.6,95.2,95.8,96,96.4,96.7,96.9,97,97.1],
+        delta: { val: "0.9 pp", dir: "up", tone: "good" }, cmp: "dentro do limite" },
+      { label: "Indicador 5", ico: "factory", tone: "brand", value: "06", unit: "/ 8 operando",
+        variant: "seg", seg: [ {flex:6,color:"success",label:"6 operando"}, {flex:1,color:"amber",label:"1 reduzida"}, {flex:1,color:"coral",label:"1 parada"} ] },
+    ],
+    main: {
+      type: "sankey",
+      title: "Balanço de Produção · Rendimento por Categoria",
+      sub: "Frações geradas a partir do processamento — 412 mil un./d",
+      source: { label: "Insumo", value: "412 mil un./d" },
+      flows: [
+        { label:"Produto 1",          pct:38, color:"brand",   val:"156,6 mil" },
+        { label:"Produto 2",          pct:26, color:"info",    val:"107,1 mil" },
+        { label:"Produto 3",          pct:14, color:"success", val:"57,7 mil" },
+        { label:"Produto 4",          pct:10, color:"amber",   val:"41,2 mil" },
+        { label:"Subproduto",         pct:12, color:"ink-3",   val:"49,4 mil" },
+      ],
+      foot: [ {b:"412k",s:"Insumo processado · un./d"}, {b:"88%",s:"Conversão em produtos",c:"success-d"},
+              {b:"2.205",s:"Produto 1 acum. · mil un.",c:"brand"}, {b:"12%",s:"Subproduto · fração"} ]
+    },
+    side: {
+      type: "radar",
+      title: "Conformidade de Qualidade",
+      sub: "Parâmetros do produto vs. limite regulatório",
+      norma: 80,
+      axes: ["Parâmetro 1","Parâmetro 2","Parâmetro 3","Parâmetro 4","Parâmetro 5","Parâmetro 6"],
+      series: { label:"Realizado", color:"brand", data:[96,92,95,90,98,93] },
+      note: "Todos os parâmetros acima do limite regulatório"
+    },
+    chart: {
+      title: "Produção por Categoria · Produto 2 vs. Produto 1",
+      sub: "Volume por categoria (mil un./d) e rendimento da planta — 2026",
+      left: { min: 0, max: 240, step: 60 },
+      right: { min: 88, max: 96, step: 2, suffix: "%", color: "success" },
+      bars: [ { key:"gas", label:"Produto 2", color:"info", unit:"mil un./d",
+                data:[148,152,150,158,160,155,162,165,168,170,166,172] },
+              { key:"die", label:"Produto 1", color:"brandGrad", unit:"mil un./d",
+                data:[172,168,175,180,178,185,188,182,190,195,192,200] } ],
+      lines: [ { key:"rend", label:"Rendimento da planta (%)", color:"success", axis:"right", unit:"%",
+                 data:[91,90.5,92,92.5,91.8,93,93.4,92.8,93.6,94,93.2,93.4] } ],
+      hilite: 9,
+      foot: [ {b:"2.001",s:"Produto 2 acum. · mil un."}, {b:"2.205",s:"Produto 1 acum. · mil un."},
+              {b:"92.4%",s:"Rendimento médio",c:"success-d"}, {b:"200",s:"Pico Produto 1 — Dez",c:"brand"} ]
+    },
+    donut: {
+      title: "Origem do Insumo", sub: "Composição da carga",
+      center: "412k", centerSub: "un. / dia",
+      sideLbl: "Carga processada (dia)", sideVal: "412.000 un.",
+      delta: { val: "2.8% no mês", dir: "up", tone: "good" },
+      segs: [ {nm:"Pré-sal", vv:"214.240", pp:52, color:"brand"},
+              {nm:"Nacional onshore", vv:"115.360", pp:28, color:"success"},
+              {nm:"Importado", vv:"61.800", pp:15, color:"info"},
+              {nm:"Reprocessado", vv:"20.600", pp:5, color:"amber"} ]
+    },
+    gantt: {
+      title: "Paradas & Processos — 2º Trimestre",
+      sub: "Paradas programadas, trocas de componentes e partidas · 7 processos",
+      col: "Unidade / Processo",
+      rows: [
+        { ico:"factory", tone:"brand", title:"Unidade 01", sub:"Processo principal", own:"R1",
+          bar:{ left:8, width:34, segs:[{t:"done",w:45},{t:"prog",w:40},{t:"plan",w:15}], pct:"64%" } },
+        { ico:"refine", tone:"amber", title:"Unidade 02", sub:"Equipamento principal", own:"R8",
+          bar:{ left:30, width:22, segs:[{t:"done",w:30},{t:"warn",w:70}], pct:"31% · atenção", pctBad:false } },
+        { ico:"factory", tone:"info", title:"Unidade 03", sub:"Processo de conversão", own:"R3",
+          bar:{ left:46, width:26, segs:[{t:"prog",w:100}], pct:"em execução" }, miles:[60] },
+        { ico:"wrench", tone:"success", title:"Unidade 04", sub:"Etapa de processo", own:"R4",
+          bar:{ left:18, width:18, segs:[{t:"done",w:100}], pct:"100%" } },
+        { ico:"flow", tone:"brand", title:"Unidade 05", sub:"Processo 05", own:"R6",
+          bar:{ left:62, width:30, segs:[{t:"plan",w:100}], pct:"planejado · Ago", plan:true } },
+        { ico:"alert", tone:"coral", title:"Equipamento 06", sub:"Corretiva · vazamento detectado", own:"R5",
+          bar:{ left:24, width:16, segs:[{t:"late",w:100}], pct:"atraso 4d", pctBad:true } },
+        { ico:"drop", tone:"success", title:"Equipamento 07", sub:"Eficiência operacional", own:"R7",
+          bar:{ left:50, width:20, segs:[{t:"done",w:70},{t:"prog",w:30}], pct:"72%" } },
+      ]
+    }
+  },
+
+  /* ===================== G4 · LOGÍSTICA ===================== */
+  g4: {
+    tab: "g4",
+    context: "Gerência 4",
+    kpis: [
+      { label: "Indicador 1", ico: "route", tone: "brand", value: "42", unit: "rotas",
+        variant: "spark", color: "brand", spark: [34,36,35,38,37,39,40,38,41,42],
+        delta: { val: "5 rotas", dir: "up", tone: "good" }, cmp: "vs. semana anterior" },
+      { label: "Indicador 2", ico: "bars", tone: "success", value: "87.5", unit: "%",
+        variant: "spark", color: "success", spark: [82,83.5,84,85.2,84.6,86,87,86.4,87.2,87.5],
+        delta: { val: "2.4 pp", dir: "up", tone: "good" }, cmp: "ociosidade em queda" },
+      { label: "Indicador 3", ico: "drop", tone: "info", value: "4,12", unit: "/ km", pre: "R$",
+        variant: "spark", color: "info", spark: [4.5,4.44,4.38,4.32,4.28,4.24,4.2,4.18,4.15,4.12],
+        delta: { val: "2.3%", dir: "down", tone: "good" }, cmp: "vs. trimestre anterior" },
+      { label: "Indicador 4", ico: "truck", tone: "info", value: "84", unit: "/ 96 em rota",
+        variant: "seg", seg: [ {flex:84,color:"success",label:"84 em rota"}, {flex:9,color:"amber",label:"9 manut."}, {flex:3,color:"coral",label:"3 parados"} ] },
+      { label: "Indicador 5", ico: "alert", tone: "coral", value: "05", unit: "ativos",
+        variant: "seg", seg: [ {flex:1,color:"coral",label:"1 crítico"}, {flex:2,color:"amber",label:"2 atenção"}, {flex:2,color:"info",label:"2 info"} ] },
+    ],
+    main: {
+      type: "area",
+      title: "Fluxo de Carregamento & Distribuição · 24h",
+      sub: "Volume movimentado por hora (un.) — operação em campo",
+      left: { min: 0, max: 120, step: 30, suffix: " un." },
+      xcats: ["00h","04h","08h","12h","16h","20h","24h"],
+      series: [
+        { key:"carreg", label:"Carregamento", color:"brand",   data:[12,10,14,28,42,55,60,58,48,36,24,16,12] },
+        { key:"escoa",  label:"Escoamento",   color:"success", data:[20,18,16,22,30,38,44,46,50,52,40,28,22] },
+      ],
+      hilite: 8,
+      foot: [ {b:"1.114 un.",s:"Movimentado hoje"}, {b:"16h",s:"Pico de operação",c:"brand"},
+              {b:"+8.2%",s:"vs. média 7 dias",c:"success-d"}, {b:"2",s:"Janelas ativas"} ]
+    },
+    side: {
+      type: "groupbars",
+      title: "Custo de Frete · Terceirizado vs. Próprio",
+      sub: "Custo unitário (R$/t) por região",
+      left: { min: 0, max: 70, step: 20 },
+      cats: ["Nordeste","Sudeste","Norte","Sul"],
+      series: [ { label:"Terceirizado", color:"amber", data:[58,62,55,60] },
+                { label:"Frota própria", color:"brand", data:[44,47,42,45] } ],
+      note: "Frota própria 24% mais econômica em média"
+    },
+    chart: {
+      title: "Custo de Transporte vs. Volume Movimentado",
+      sub: "Volume (mil t) e custo unitário (R$/t) — 2026",
+      left: { min: 0, max: 200, step: 50 },
+      right: { min: 40, max: 70, step: 10, suffix: "", color: "coral" },
+      bars: [ { key:"vol", label:"Volume movimentado (mil t)", color:"brandGrad", unit:"mil t",
+                data:[120,128,135,142,138,151,160,155,168,172,165,180] } ],
+      ghost: null,
+      lines: [ { key:"custo", label:"Custo (R$/t)", color:"coral", axis:"right", unit:"R$/t",
+                 data:[62,60,58,56,57,54,52,53,50,49,51,48] },
+               { key:"meta", label:"Meta de custo (R$/t)", color:"amber-d", axis:"right", unit:"R$/t", dashed:true,
+                 data:[58,57,56,55,54,53,52,51,50,50,49,48] } ],
+      hilite: 11,
+      foot: [ {b:"1.814",s:"Volume acum. · mil t"}, {b:"R$ 48/t",s:"Custo atual unitário",c:"coral-d"},
+              {b:"-22.6%",s:"Redução de custo (ano)",c:"success-d"}, {b:"180",s:"Pico volume — Dez",c:"brand"} ]
+    },
+    donut: {
+      title: "Entregas por Região", sub: "Distribuição mensal",
+      center: "2.184", centerSub: "entregas",
+      sideLbl: "Total de entregas (mês)", sideVal: "2.184 entregas",
+      delta: { val: "4.1% no mês", dir: "up", tone: "good" },
+      segs: [ {nm:"Nordeste", vv:"830", pp:38, color:"brand"},
+              {nm:"Sudeste", vv:"633", pp:29, color:"success"},
+              {nm:"Norte", vv:"459", pp:21, color:"amber"},
+              {nm:"Sul / Centro-Oeste", vv:"262", pp:12, color:"info"} ]
+    },
+    gantt: {
+      title: "Rotas & Movimentação de Carga — 2º Trimestre",
+      sub: "Rotas, carregamentos e despachos · 7 operações",
+      col: "Rota / Operação",
+      rows: [
+        { ico:"route", tone:"brand", title:"Rota 01", sub:"Frota 01 · 842 km", own:"R2",
+          bar:{ left:6, width:30, segs:[{t:"done",w:55},{t:"prog",w:45}], pct:"55%" } },
+        { ico:"truck", tone:"success", title:"Operação 02", sub:"Terminal A · Produto 1", own:"R6",
+          bar:{ left:2, width:16, segs:[{t:"done",w:100}], pct:"100%" } },
+        { ico:"route", tone:"info", title:"Operação 03", sub:"Base 1 → Base 2", own:"R5",
+          bar:{ left:30, width:28, segs:[{t:"done",w:40},{t:"prog",w:35},{t:"warn",w:25}], pct:"63%" }, miles:[58] },
+        { ico:"flow", tone:"brand", title:"Operação 04", sub:"Embarcação 01", own:"R3",
+          bar:{ left:20, width:40, segs:[{t:"done",w:30},{t:"prog",w:70}], pct:"34%" } },
+        { ico:"alert", tone:"coral", title:"Rota 05", sub:"Atraso · condições da via", own:"R4",
+          bar:{ left:34, width:24, segs:[{t:"done",w:35},{t:"late",w:65}], pct:"35% · atraso 3d", pctBad:true } },
+        { ico:"wrench", tone:"amber", title:"Operação 06", sub:"Revisão preventiva", own:"R7",
+          bar:{ left:14, width:14, segs:[{t:"warn",w:100}], pct:"em revisão" } },
+        { ico:"route", tone:"brand", title:"Rota 07", sub:"Nova rota · planejada", own:"R8",
+          bar:{ left:66, width:28, segs:[{t:"plan",w:100}], pct:"planejado · Ago", plan:true } },
+      ]
+    }
+  },
+
+  /* ===================== G5 · MANUTENÇÃO ===================== */
+  g5: {
+    tab: "g5",
+    context: "Gerência 5",
+    kpis: [
+      { label: "Indicador 1", ico: "stack", tone: "amber", value: "1.450", unit: "h",
+        variant: "spark", color: "amber-d", spark: [1280,1320,1210,1390,1450,1380,1420,1510,1460,1450],
+        delta: { val: "6.5%", dir: "up", tone: "bad" }, cmp: "acima do limite (1.200h)" },
+      { label: "Indicador 2", ico: "check", tone: "success", value: "88.5", unit: "%",
+        variant: "spark", color: "success", spark: [90,89.5,91,90.2,89,88.6,89.4,88,88.8,88.5],
+        delta: { val: "2.1 pp", dir: "down", tone: "bad" }, cmp: "meta 92% · abaixo" },
+      { label: "Indicador 3", ico: "clock", tone: "brand", value: "412", unit: "h",
+        variant: "spark", color: "brand", spark: [360,372,385,378,394,401,396,405,409,412],
+        delta: { val: "18 h", dir: "up", tone: "good" }, cmp: "tempo médio entre falhas" },
+      { label: "Indicador 4", ico: "drop", tone: "info", value: "2,84", unit: "mi", pre: "R$",
+        variant: "spark", color: "info", spark: [2.4,2.55,2.62,2.5,2.71,2.66,2.78,2.74,2.8,2.84],
+        delta: { val: "4.2%", dir: "up", tone: "warn" }, cmp: "vs. orçado R$ 2,70 mi" },
+      { label: "Indicador 5", ico: "stack", tone: "coral", value: "59", unit: "ordens abertas",
+        variant: "seg", seg: [ {flex:34,color:"brand",label:"34 execução"}, {flex:18,color:"amber",label:"18 pendentes"}, {flex:7,color:"coral",label:"7 atrasadas"} ] },
+    ],
+    main: {
+      type: "matrix",
+      title: "Matriz de Risco · Severidade do Ativo × Criticidade da Ordem",
+      sub: "Distribuição das ordens abertas por zona de risco",
+      ylabel: "Severidade do ativo", ycats: ["Alta","Média","Baixa"],
+      xlabel: "Criticidade da ordem", xcats: ["Baixa","Média","Alta"],
+      cells: [ [3,5,4], [6,9,5], [8,7,3] ],
+      foot: [ {b:"50",s:"Ordens mapeadas"}, {b:"12",s:"Zona crítica",c:"coral-d"},
+              {b:"R$ 2,84 mi",s:"Custo em risco",c:"amber-d"}, {b:"3",s:"Ativos críticos",c:"coral"} ]
+    },
+    side: {
+      type: "table",
+      title: "Top 5 Ativos Críticos",
+      sub: "Maiores geradores de parada · semana",
+      rows: [
+        { nm:"Equipamento 01", sub:"Unidade 03", val:"R$ 318k", h:"42 h parado", bar:100, tone:"coral" },
+        { nm:"Equipamento 02", sub:"Sistema crítico", val:"R$ 224k", h:"31 h parado", bar:70, tone:"coral" },
+        { nm:"Equipamento 04", sub:"Etapa de processo", val:"R$ 196k", h:"28 h parado", bar:62, tone:"amber" },
+        { nm:"Equipamento 06", sub:"Sistema auxiliar", val:"R$ 142k", h:"19 h parado", bar:45, tone:"amber" },
+        { nm:"Equipamento 05", sub:"Geração emergência", val:"R$ 98k", h:"14 h parado", bar:31, tone:"success" },
+      ]
+    },
+    chart: {
+      title: "Backlog de Ordens · Horas vs. Capacidade",
+      sub: "Horas acumuladas e capacidade da equipe — 2026",
+      left: { min: 0, max: 1600, step: 400 },
+      right: { min: 80, max: 95, step: 5, suffix: "%", color: "success" },
+      bars: [ { key:"back", label:"Backlog de ordens (h)", color:"amberGrad", unit:"h",
+                data:[1280,1320,1210,1390,1450,1380,1420,1510,1460,1440,1480,1450] } ],
+      ghost: { label:"Capacidade da equipe (h)", color:"brand", dashed:true, unit:"h",
+               data:[1350,1350,1350,1400,1400,1400,1450,1450,1450,1500,1500,1500] },
+      lines: [ { key:"conf", label:"Conformidade preventiva (%)", color:"success", axis:"right", unit:"%",
+                 data:[85,84,87,86,88,89,87,90,91,88,90,88.5] } ],
+      hilite: 7,
+      foot: [ {b:"1.450 h",s:"Backlog atual",c:"amber-d"}, {b:"1.500 h",s:"Capacidade mensal"},
+              {b:"88.5%",s:"Conformidade preventiva",c:"success-d"}, {b:"7",s:"Ordens atrasadas",c:"coral"} ]
+    },
+    donut: {
+      title: "Ordens por Tipo", sub: "Distribuição mensal",
+      center: "59", centerSub: "Ordens abertas",
+      sideLbl: "Total de ordens no mês", sideVal: "184 ordens",
+      delta: { val: "12 O.S. vs. mês", dir: "up", tone: "warn" },
+      segs: [ {nm:"Preventiva", vv:"88", pp:48, color:"brand"},
+              {nm:"Corretiva", vv:"50", pp:27, color:"coral"},
+              {nm:"Preditiva", vv:"28", pp:15, color:"success"},
+              {nm:"Inspeção", vv:"18", pp:10, color:"amber"} ]
+    },
+    gantt: {
+      title: "Equipamentos & Manutenções Críticas — 2º Trimestre",
+      sub: "Preventivas, inspeções e revisões priorizadas · 7 ordens",
+      col: "Equipamento / Ordem",
+      rows: [
+        { ico:"wrench", tone:"brand", title:"Manutenção · Equipamento 02", sub:"Manutenção programada", own:"R3",
+          bar:{ left:6, width:26, segs:[{t:"done",w:60},{t:"prog",w:40}], pct:"60%" } },
+        { ico:"alert", tone:"coral", title:"Inspeção regulatória · Vaso 55", sub:"Equipamento crítico · atraso", own:"R4",
+          bar:{ left:14, width:24, segs:[{t:"done",w:30},{t:"warn",w:25},{t:"late",w:45}], pct:"42% · atraso 6d", pctBad:true } },
+        { ico:"factory", tone:"info", title:"Overhaul Equipamento 05", sub:"Sistema de apoio", own:"R6",
+          bar:{ left:40, width:34, segs:[{t:"prog",w:100}], pct:"em execução" }, miles:[64] },
+        { ico:"wrench", tone:"success", title:"Troca de Selo · Equipamento 01", sub:"Componente interno", own:"R5",
+          bar:{ left:24, width:16, segs:[{t:"done",w:100}], pct:"100%" } },
+        { ico:"bars", tone:"amber", title:"Calibração Instrumentação", sub:"Instrumentação", own:"R7",
+          bar:{ left:30, width:20, segs:[{t:"done",w:50},{t:"warn",w:50}], pct:"50% · atenção" } },
+        { ico:"drop", tone:"coral", title:"Corretiva Equipamento 06", sub:"Ocorrência registrada", own:"R8",
+          bar:{ left:18, width:14, segs:[{t:"late",w:100}], pct:"atraso 4d", pctBad:true } },
+        { ico:"factory", tone:"brand", title:"Parada Elétrica · Subestação 03", sub:"Atividade planejada", own:"R1",
+          bar:{ left:68, width:26, segs:[{t:"plan",w:100}], pct:"planejado · Ago", plan:true } },
+      ]
+    }
+  },
+
+  /* ===================== G3 · ESCOAMENTO ===================== */
+  g3: {
+    tab: "g3",
+    context: "Gerência 3",
+    kpis: [
+      { label: "Indicador 1", ico: "flow", tone: "brand", value: "61", unit: "mil un./d",
+        variant: "spark", color: "brand", spark: [54,52,57,59,56,60,58,57,60,61],
+        delta: { val: "3.2%", dir: "up", tone: "good" }, cmp: "vs. ontem · meta 60" },
+      { label: "Indicador 2", ico: "bars", tone: "success", value: "96.1", unit: "%",
+        variant: "spark", color: "success", spark: [93,92.6,94,93.4,94.8,95.2,94.6,95.4,95.8,96.1],
+        delta: { val: "1.8 pp", dir: "up", tone: "good" }, cmp: "7 unidades monitoradas" },
+      { label: "Indicador 3", ico: "drop", tone: "info", value: "88.3", unit: "%",
+        variant: "spark", color: "info", spark: [80,79,83,84,82,85,84,86,87,88.3],
+        delta: { val: "2.1 pp", dir: "up", tone: "good" }, cmp: "Linha prioritária" },
+      { label: "Indicador 4", ico: "alert", tone: "amber", value: "0.42", unit: "%",
+        variant: "spark", color: "amber-d", spark: [0.58,0.55,0.51,0.49,0.5,0.47,0.45,0.46,0.44,0.42],
+        delta: { val: "0.08 pp", dir: "down", tone: "good" }, cmp: "dentro do limite (0,5%)" },
+      { label: "Indicador 5", ico: "flow", tone: "brand", value: "06", unit: "/ 8 normais",
+        variant: "seg", seg: [ {flex:6,color:"success",label:"6 normais"}, {flex:1,color:"amber",label:"1 restrição"}, {flex:1,color:"info",label:"1 manut."} ] },
+    ],
+    chart: {
+      title: "Volume Distribuído por Linha · Capacidade vs. Realizado",
+      sub: "Volume diário (mil un./d) e ocupação das linhas — 2026",
+      left: { min: 0, max: 80, step: 20 },
+      right: { min: 70, max: 100, step: 10, suffix: "%", color: "info" },
+      bars: [ { key:"real", label:"Realizado", color:"brandGrad", unit:"mil un./d",
+                data:[54,52,57,59,56,60,58,57,60,62,59,61] } ],
+      ghost: { label:"Capacidade do sistema", color:"ink-3", dashed:true, unit:"mil un./d",
+               data:[70,70,70,72,72,72,72,74,74,74,76,76] },
+      lines: [ { key:"ocup", label:"Ocupação das linhas (%)", color:"info", axis:"right", unit:"%",
+                 data:[80,79,83,84,82,85,84,82,86,87,85,88] } ],
+      hilite: 11,
+      foot: [ {b:"1.842",s:"Volume acum. · mil un."}, {b:"82.1%",s:"Ocupação média",c:"info"},
+              {b:"95.4%",s:"Efic. média operacional",c:"success-d"}, {b:"62",s:"Pico — Out/2026",c:"brand"} ]
+    },
+    donut: {
+      title: "Distribuição por Destino", sub: "Distribuição mensal",
+      center: "1.84M", centerSub: "un. / mês",
+      sideLbl: "Volume total escoado", sideVal: "1.842.300 un.",
+      delta: { val: "3.2% no mês", dir: "up", tone: "good" },
+      segs: [ {nm:"Destino 1", vv:"700.074", pp:38, color:"brand"},
+              {nm:"Destino 2", vv:"571.113", pp:31, color:"success"},
+              {nm:"Destino 3", vv:"350.037", pp:19, color:"amber"},
+              {nm:"Destino 4", vv:"221.076", pp:12, color:"info"} ]
+    },
+    gantt: {
+      title: "Operação de Linhas & Terminais — 2º Trimestre",
+      sub: "Lotes, inspeções e janelas de terminal · 7 operações",
+      col: "Linha / Terminal",
+      rows: [
+        { ico:"flow", tone:"brand", title:"Operação 01", sub:"Produto 1 · 480 mil un.", own:"R2",
+          bar:{ left:4, width:34, segs:[{t:"done",w:50},{t:"prog",w:50}], pct:"50%" } },
+        { ico:"drop", tone:"success", title:"Inspeção 02", sub:"Limpeza programada", own:"R3",
+          bar:{ left:24, width:18, segs:[{t:"done",w:100}], pct:"100%" } },
+        { ico:"tank", tone:"info", title:"Operação 03", sub:"Embarcação 01", own:"R5",
+          bar:{ left:40, width:26, segs:[{t:"prog",w:100}], pct:"em execução" }, miles:[60] },
+        { ico:"wrench", tone:"amber", title:"Equipamento 04", sub:"Manutenção de equipamento", own:"R6",
+          bar:{ left:16, width:16, segs:[{t:"done",w:60},{t:"warn",w:40}], pct:"60% · atenção" } },
+        { ico:"alert", tone:"coral", title:"Inspeção 05", sub:"Inspeção interna · atraso", own:"R4",
+          bar:{ left:30, width:22, segs:[{t:"done",w:35},{t:"late",w:65}], pct:"35% · atraso 5d", pctBad:true } },
+        { ico:"fuel", tone:"brand", title:"Operação 06", sub:"Base 1 → Terminal", own:"R7",
+          bar:{ left:8, width:14, segs:[{t:"done",w:100}], pct:"100%" }, miles:[22] },
+        { ico:"flow", tone:"brand", title:"Operação 07", sub:"Embarque · planejado", own:"R8",
+          bar:{ left:66, width:28, segs:[{t:"plan",w:100}], pct:"planejado · Ago", plan:true } },
+      ]
+    }
+  },
+
+  /* ===================== G6 · FROTA ===================== */
+  g6: {
+    tab: "g6",
+    context: "Gerência 6",
+    kpis: [
+      { label: "Indicador 1", ico: "truck", tone: "brand", value: "84", unit: "/ 96 frota",
+        variant: "seg", seg: [ {flex:84,color:"success",label:"84 em rota"}, {flex:9,color:"amber",label:"9 manut."}, {flex:3,color:"coral",label:"3 parados"} ] },
+      { label: "Indicador 2", ico: "bars", tone: "success", value: "91.2", unit: "%",
+        variant: "spark", color: "success", spark: [88,87.5,89,90,89.2,90.5,91,90.4,91.4,91.2],
+        delta: { val: "1.4 pp", dir: "up", tone: "good" }, cmp: "meta 90% · superada" },
+      { label: "Indicador 3", ico: "fuel", tone: "amber", value: "2.8", unit: "km/L",
+        variant: "spark", color: "amber-d", spark: [2.6,2.62,2.65,2.7,2.68,2.72,2.74,2.76,2.78,2.8],
+        delta: { val: "3.0%", dir: "up", tone: "good" }, cmp: "eco-driving ativo" },
+      { label: "Indicador 4", ico: "drop", tone: "info", value: "4,12", unit: "/ km", pre: "R$",
+        variant: "spark", color: "info", spark: [4.5,4.44,4.38,4.32,4.28,4.24,4.2,4.18,4.15,4.12],
+        delta: { val: "2.3%", dir: "down", tone: "good" }, cmp: "vs. trimestre anterior" },
+      { label: "Indicador 5", ico: "wrench", tone: "coral", value: "12", unit: "ordens",
+        variant: "seg", seg: [ {flex:7,color:"brand",label:"7 preventivas"}, {flex:3,color:"amber",label:"3 corretivas"}, {flex:2,color:"coral",label:"2 inspeções"} ] },
+    ],
+    chart: {
+      title: "Quilometragem & Disponibilidade",
+      sub: "Distância percorrida (mil km) e disponibilidade — 2026",
+      left: { min: 0, max: 200, step: 50 },
+      right: { min: 80, max: 95, step: 5, suffix: "%", color: "success" },
+      bars: [ { key:"km", label:"Quilometragem (mil km)", color:"brandGrad", unit:"mil km",
+                data:[142,148,151,156,153,162,168,160,172,176,170,182] } ],
+      ghost: { label:"Meta de quilometragem", color:"ink-3", dashed:true, unit:"mil km",
+               data:[150,150,155,160,160,165,170,170,175,180,180,185] },
+      lines: [ { key:"disp", label:"Disponibilidade (%)", color:"success", axis:"right", unit:"%",
+                 data:[88,87.5,89,90,89.2,90.5,91,90.4,91.4,92,90.8,91.2] } ],
+      hilite: 11,
+      foot: [ {b:"1.880",s:"Km acum. · mil km"}, {b:"90.1%",s:"Disponibilidade média",c:"success-d"},
+              {b:"R$ 4,12",s:"Custo médio por km",c:"info"}, {b:"182",s:"Pico — Dez/2026",c:"brand"} ]
+    },
+    donut: {
+      title: "Composição por Categoria", sub: "Composição do grupo",
+      center: "96", centerSub: "veículos",
+      sideLbl: "Total de unidades", sideVal: "96 unidades",
+      delta: { val: "6 novos no ano", dir: "up", tone: "good" },
+      segs: [ {nm:"Categoria 1", vv:"40", pp:42, color:"brand"},
+              {nm:"Categoria 2", vv:"26", pp:27, color:"success"},
+              {nm:"Categoria 3", vv:"18", pp:18, color:"info"},
+              {nm:"Categoria 4", vv:"12", pp:13, color:"amber"} ]
+    },
+    gantt: {
+      title: "Manutenção & Renovação — 2º Trimestre",
+      sub: "Revisões, renovações e aquisições · 7 frentes",
+      col: "Unidade / Frente",
+      rows: [
+        { ico:"wrench", tone:"brand", title:"Revisão Frota 01–10", sub:"Preventiva programada", own:"R3",
+          bar:{ left:6, width:28, segs:[{t:"done",w:55},{t:"prog",w:45}], pct:"55%" } },
+        { ico:"truck", tone:"success", title:"Troca de Pneus · Veículo 12", sub:"Itens substituídos", own:"R6",
+          bar:{ left:2, width:14, segs:[{t:"done",w:100}], pct:"100%" } },
+        { ico:"check", tone:"info", title:"Renovação Contrato Leasing", sub:"Múltiplas unidades", own:"R5",
+          bar:{ left:30, width:30, segs:[{t:"prog",w:100}], pct:"em negociação" }, miles:[58] },
+        { ico:"bars", tone:"brand", title:"Instalação Telemetria", sub:"Sistema integrado", own:"R7",
+          bar:{ left:18, width:24, segs:[{t:"done",w:40},{t:"prog",w:60}], pct:"40%" } },
+        { ico:"alert", tone:"coral", title:"Corretiva · Veículo 08", sub:"Atraso de peças", own:"R4",
+          bar:{ left:24, width:18, segs:[{t:"done",w:30},{t:"late",w:70}], pct:"30% · atraso 7d", pctBad:true } },
+        { ico:"wrench", tone:"amber", title:"Inspeção Regulatória", sub:"Verificação periódica", own:"R8",
+          bar:{ left:14, width:14, segs:[{t:"warn",w:100}], pct:"em inspeção" } },
+        { ico:"truck", tone:"brand", title:"Aquisição 6 Veículos", sub:"Categoria 1 · planejado", own:"R1",
+          bar:{ left:66, width:28, segs:[{t:"plan",w:100}], pct:"planejado · Ago", plan:true } },
+      ]
+    }
+  },
+
+  /* ===================== G7 · SUPRIMENTOS ===================== */
+  g7: {
+    tab: "g7",
+    context: "Gerência 7",
+    kpis: [
+      { label: "Indicador 1", ico: "fuel", tone: "brand", value: "1.24", unit: "M un.",
+        variant: "spark", color: "brand", spark: [1.1,1.18,0.98,1.24,1.32,1.15,1.28,1.08,1.35,1.24],
+        delta: { val: "78.5%", dir: "up", tone: "good" }, cmp: "da capacidade total" },
+      { label: "Indicador 2", ico: "clock", tone: "info", value: "12.4", unit: "dias",
+        variant: "spark", color: "info", spark: [10,11,8.5,12,13,10.5,12.5,9.5,13.5,12.4],
+        delta: { val: "1.2 dia", dir: "up", tone: "good" }, cmp: "meta ≥ 10 dias" },
+      { label: "Indicador 3", ico: "bars", tone: "amber", value: "312", unit: "mil un.",
+        variant: "spark", color: "amber-d", spark: [330,326,320,324,318,316,314,317,313,312],
+        delta: { val: "1.8%", dir: "down", tone: "good" }, cmp: "consumo médio diário" },
+      { label: "Indicador 4", ico: "drop", tone: "success", value: "5,84", unit: "/ un.", pre: "R$",
+        variant: "spark", color: "success", spark: [6.1,6.04,5.98,5.92,5.95,5.9,5.88,5.86,5.85,5.84],
+        delta: { val: "0.9%", dir: "down", tone: "good" }, cmp: "contrato favorável" },
+      { label: "Indicador 5", ico: "stack", tone: "coral", value: "36", unit: "pedidos",
+        variant: "seg", seg: [ {flex:24,color:"success",label:"24 aprovados"}, {flex:9,color:"amber",label:"9 em trânsito"}, {flex:3,color:"coral",label:"3 atrasados"} ] },
+    ],
+    chart: {
+      title: "Estoque vs. Estoque Mínimo · Projeção de Cobertura",
+      sub: "Nível de estoque (mil un.) e cobertura em dias — 2026",
+      left: { min: 0, max: 1600, step: 400 },
+      right: { min: 0, max: 20, step: 5, suffix: "d", color: "info" },
+      bars: [ { key:"est", label:"Estoque (mil un.)", color:"brandGrad", unit:"mil un.",
+                data:[1100,1180,980,1240,1320,1150,1280,1080,1350,1220,1300,1240] } ],
+      ghost: { label:"Estoque mínimo (mil un.)", color:"coral", dashed:true, unit:"mil un.",
+               data:[800,800,800,850,850,850,900,900,900,950,950,950] },
+      lines: [ { key:"cob", label:"Cobertura (dias)", color:"info", axis:"right", unit:"dias",
+                 data:[10,11,8.5,12,13,10.5,12.5,9.5,13.5,12,13,12.4] } ],
+      hilite: 11,
+      foot: [ {b:"1.24M un.",s:"Estoque atual",c:"brand"}, {b:"12.4 d",s:"Cobertura atual",c:"info"},
+              {b:"R$ 5,84",s:"Preço médio · unidade",c:"success-d"}, {b:"3",s:"Pedidos atrasados",c:"coral"} ]
+    },
+    donut: {
+      title: "Estoque por Categoria", sub: "Composição do inventário",
+      center: "1.58M", centerSub: "unidades",
+      sideLbl: "Volume total em estoque", sideVal: "1.580.000 un.",
+      delta: { val: "2.4% no mês", dir: "up", tone: "good" },
+      segs: [ {nm:"Produto 1", vv:"711.000", pp:45, color:"brand"},
+              {nm:"Produto 2", vv:"442.400", pp:28, color:"success"},
+              {nm:"Produto 3", vv:"237.000", pp:15, color:"amber"},
+              {nm:"Produto 4", vv:"189.600", pp:12, color:"info"} ]
+    },
+    gantt: {
+      title: "Pedidos & Reabastecimento — 2º Trimestre",
+      sub: "Compras, recebimentos e contratos · 7 processos",
+      col: "Pedido / Processo",
+      rows: [
+        { ico:"stack", tone:"brand", title:"Pedido #4821 · Produto 1", sub:"480 mil un.", own:"R6",
+          bar:{ left:6, width:24, segs:[{t:"done",w:65},{t:"prog",w:35}], pct:"65%" } },
+        { ico:"fuel", tone:"success", title:"Reabastecimento · Base 1", sub:"Áreas de armazenamento", own:"R2",
+          bar:{ left:2, width:14, segs:[{t:"done",w:100}], pct:"100%" } },
+        { ico:"check", tone:"info", title:"Cotação Fornecedores", sub:"Múltiplos fornecedores", own:"R5",
+          bar:{ left:28, width:26, segs:[{t:"prog",w:100}], pct:"em análise" }, miles:[54] },
+        { ico:"tank", tone:"brand", title:"Recebimento · Embarcação 01", sub:"Recebimento de carga", own:"R3",
+          bar:{ left:20, width:18, segs:[{t:"done",w:50},{t:"prog",w:50}], pct:"50%" } },
+        { ico:"alert", tone:"coral", title:"Pedido 02 · Produto 4", sub:"Atraso no processo", own:"R4",
+          bar:{ left:24, width:20, segs:[{t:"done",w:25},{t:"late",w:75}], pct:"25% · atraso 8d", pctBad:true } },
+        { ico:"bars", tone:"amber", title:"Auditoria de Estoque", sub:"Conferência de estoque", own:"R7",
+          bar:{ left:34, width:16, segs:[{t:"warn",w:100}], pct:"em contagem" } },
+        { ico:"drop", tone:"brand", title:"Contrato Anual · Produto 1", sub:"Renovação · planejado", own:"R8",
+          bar:{ left:66, width:28, segs:[{t:"plan",w:100}], pct:"planejado · Ago", plan:true } },
+      ]
+    }
+  },
+
+  /* ===================== G8 · HSE & SEGURANÇA ===================== */
+  g8: {
+    tab: "g8",
+    context: "Gerência 8",
+    kpis: [
+      { label: "Indicador 1", ico: "check", tone: "brand", value: "312", unit: "dias",
+        variant: "spark", color: "brand", spark: [225,240,255,268,276,284,292,300,306,312],
+        delta: { val: "recorde", dir: "up", tone: "good" }, cmp: "marca histórica da unidade" },
+      { label: "Indicador 2", ico: "alert", tone: "success", value: "0.84", unit: "TF",
+        variant: "spark", color: "success", spark: [1.4,1.32,1.18,1.1,1.02,0.96,0.92,0.9,0.86,0.84],
+        delta: { val: "0.12 pt", dir: "down", tone: "good" }, cmp: "abaixo da meta (1,0)" },
+      { label: "Indicador 3", ico: "bars", tone: "info", value: "94.6", unit: "%",
+        variant: "spark", color: "info", spark: [90,90.8,91.5,92,92.6,93,93.5,94,94.2,94.6],
+        delta: { val: "1.1 pp", dir: "up", tone: "good" }, cmp: "32 normas auditadas" },
+      { label: "Indicador 4", ico: "drop", tone: "amber", value: "87.2", unit: "%",
+        variant: "spark", color: "amber-d", spark: [80,81.5,83,84.2,84.8,85.5,86,86.4,86.9,87.2],
+        delta: { val: "2.4 pp", dir: "up", tone: "good" }, cmp: "1.284 h realizadas" },
+      { label: "Indicador 5", ico: "alert", tone: "coral", value: "42", unit: "riscos",
+        variant: "seg", seg: [ {flex:31,color:"success",label:"31 controlados"}, {flex:8,color:"amber",label:"8 monitorados"}, {flex:3,color:"coral",label:"3 críticos"} ] },
+    ],
+    chart: {
+      title: "Ocorrências vs. Conformidade",
+      sub: "Quase-ocorrências registradas e índice de conformidade — 2026",
+      left: { min: 0, max: 24, step: 6 },
+      right: { min: 85, max: 100, step: 5, suffix: "%", color: "success" },
+      bars: [ { key:"oco", label:"Quase-ocorrências", color:"amberGrad", unit:"ocorr.",
+                data:[18,22,15,20,17,14,19,16,12,15,11,9] } ],
+      ghost: { label:"Meta mensal", color:"ink-3", dashed:true, unit:"ocorr.",
+               data:[15,15,15,14,14,14,12,12,12,10,10,10] },
+      lines: [ { key:"conf", label:"Conformidade (%)", color:"success", axis:"right", unit:"%",
+                 data:[89,88,90,91,90.5,92,93,92.5,93.5,94,93,94.6] } ],
+      hilite: 11,
+      foot: [ {b:"188",s:"Quase-ocorr. acum. (ano)"}, {b:"0.84",s:"Taxa de frequência",c:"success-d"},
+              {b:"94.6%",s:"Conformidade regulatória",c:"info"}, {b:"3",s:"Riscos críticos",c:"coral"} ]
+    },
+    donut: {
+      title: "Ocorrências por Categoria", sub: "Distribuição no ano",
+      center: "188", centerSub: "ocorrências",
+      sideLbl: "Total de ocorrências (ano)", sideVal: "188 registros",
+      delta: { val: "18% vs. ano ant.", dir: "down", tone: "good" },
+      segs: [ {nm:"Comportamental", vv:"68", pp:36, color:"brand"},
+              {nm:"Condição insegura", vv:"53", pp:28, color:"amber"},
+              {nm:"Processo", vv:"34", pp:18, color:"info"},
+              {nm:"Categoria 4", vv:"33", pp:18, color:"success"} ]
+    },
+    gantt: {
+      title: "Auditorias, Treinamentos & Planos de Ação — 2º Trimestre",
+      sub: "Certificações, capacitações e ações corretivas · 7 frentes",
+      col: "Frente / Ação",
+      rows: [
+        { ico:"check", tone:"brand", title:"Auditoria de gestão ambiental", sub:"Processo de gestão", own:"R3",
+          bar:{ left:6, width:26, segs:[{t:"done",w:60},{t:"prog",w:40}], pct:"60%" } },
+        { ico:"drop", tone:"success", title:"Treinamento regulatório", sub:"Capacitação · 42 colab.", own:"R2",
+          bar:{ left:2, width:16, segs:[{t:"done",w:100}], pct:"100%" } },
+        { ico:"alert", tone:"info", title:"Simulado de Emergência", sub:"Cenário de emergência", own:"R5",
+          bar:{ left:34, width:24, segs:[{t:"prog",w:100}], pct:"agendado" }, miles:[58] },
+        { ico:"bars", tone:"brand", title:"Inspeção de EPIs", sub:"Abrangência geral", own:"R7",
+          bar:{ left:18, width:18, segs:[{t:"done",w:70},{t:"prog",w:30}], pct:"70%" } },
+        { ico:"alert", tone:"coral", title:"Plano de Ação · Item 04", sub:"Área operacional · atraso", own:"R4",
+          bar:{ left:24, width:20, segs:[{t:"done",w:30},{t:"late",w:70}], pct:"30% · atraso 9d", pctBad:true } },
+        { ico:"check", tone:"amber", title:"Brigada de Incêndio", sub:"Capacitação periódica", own:"R8",
+          bar:{ left:14, width:14, segs:[{t:"warn",w:100}], pct:"em curso" } },
+        { ico:"factory", tone:"brand", title:"Certificação de gestão", sub:"Auditoria externa · planejada", own:"R1",
+          bar:{ left:66, width:28, segs:[{t:"plan",w:100}], pct:"planejado · Ago", plan:true } },
+      ]
+    }
+  }
+};
+
+</script>
+<script>
+/* ============================================================
+   PI Dashboard — Mobile renderer (reuses window.DATA / MESES)
+   ============================================================ */
+(function () {
+  "use strict";
+  const SVGNS="http://www.w3.org/2000/svg";
+  const el=(n,a)=>{const e=document.createElementNS(SVGNS,n);for(const k in(a||{}))e.setAttribute(k,a[k]);return e;};
+  const C=(v)=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const MESES=window.MESES;
+  const GRAD={brandGrad:["--brand-600","--brand"],amberGrad:["--amber","--amber-d"]};
+  const baseColor=(k)=>k==="brandGrad"?C("--brand"):k==="amberGrad"?C("--amber-d"):C("--"+k);
+  function gradId(svg,key){const id="g_"+Math.random().toString(36).slice(2,7),[a,b]=GRAD[key];const lg=el("linearGradient",{id,x1:0,y1:0,x2:0,y2:1});lg.appendChild(el("stop",{offset:0,"stop-color":C(a)}));lg.appendChild(el("stop",{offset:1,"stop-color":C(b)}));const d=el("defs");d.appendChild(lg);svg.appendChild(d);return`url(#${id})`;}
+  const fmt=(n)=>(typeof n==="number"&&n%1!==0)?n.toFixed(1):n;
+
+  const ICON={
+    drop:'<path d="M12 2 5 9c-2 2-2 6 0 8a5 5 0 0 0 7 1 5 5 0 0 0 7-1c2-2 2-6 0-8z"/>',
+    bars:'<path d="M12 20V10M18 20V4M6 20v-4"/>',
+    fuel:'<path d="M3 22V4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v18M3 11h10M13 9h3a2 2 0 0 1 2 2v6a2 2 0 0 0 4 0V9.5L18 5"/>',
+    truck:'<path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.3a1 1 0 0 0-.3-.7l-2.5-2.5a1 1 0 0 0-.7-.3H14v7h2"/><circle cx="7.5" cy="17.5" r="1.6"/><circle cx="17.5" cy="17.5" r="1.6"/>',
+    alert:'<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/>',
+    refine:'<path d="M2 20h20M4 20V8l5-3v15M14 20V4l6 4v12"/>', flow:'<path d="M3 12h4l3-9 4 18 3-9h4"/>',
+    wrench:'<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2-2z"/>',
+    tank:'<path d="M3 21V7l9-4 9 4v14M3 21h18M9 21v-6h6v6"/>', factory:'<path d="M2 20h20M4 20V9l5 3V9l5 3V6l5 3v11"/>',
+    clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    route:'<circle cx="6" cy="19" r="2.4"/><circle cx="18" cy="5" r="2.4"/><path d="M8.4 19H14a4 4 0 0 0 0-8H10a4 4 0 0 1 0-8h5.6"/>',
+    check:'<path d="M20 6 9 17l-5-5"/>', stack:'<path d="M12 2 2 7l10 5 10-5z"/><path d="M2 12l10 5 10-5M2 17l10 5 10-5"/>',
+  };
+  const svgIco=(k)=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON[k]||""}</svg>`;
+  const arrU='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"/></svg>';
+  const arrD='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
+  const swipe='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7 4 11l4 4M16 7l4 4-4 4M4 11h16"/></svg>';
+  const chevAcc='<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
+
+  function spark(svg,data,colorKey){const stroke=baseColor(colorKey),w=svg.clientWidth||160,h=svg.clientHeight||34,pad=3;const min=Math.min(...data),max=Math.max(...data),rng=(max-min)||1;const x=i=>pad+(i/(data.length-1))*(w-pad*2),y=v=>h-pad-((v-min)/rng)*(h-pad*2-2);svg.setAttribute("viewBox",`0 0 ${w} ${h}`);svg.innerHTML="";const id="s"+Math.random().toString(36).slice(2,6);const g=el("linearGradient",{id,x1:0,y1:0,x2:0,y2:1});g.appendChild(el("stop",{offset:0,"stop-color":stroke,"stop-opacity":.18}));g.appendChild(el("stop",{offset:1,"stop-color":stroke,"stop-opacity":0}));const d=el("defs");d.appendChild(g);svg.appendChild(d);const area=`M${x(0).toFixed(1)} ${h-pad} `+data.map((v,i)=>`L${x(i).toFixed(1)} ${y(v).toFixed(1)}`).join(" ")+` L${x(data.length-1).toFixed(1)} ${h-pad} Z`;let p="";data.forEach((v,i)=>p+=(i?"L":"M")+x(i).toFixed(1)+" "+y(v).toFixed(1)+" ");svg.appendChild(el("path",{d:area,fill:`url(#${id})`}));svg.appendChild(el("path",{d:p.trim(),fill:"none",stroke,"stroke-width":1.8,"stroke-linejoin":"round","stroke-linecap":"round"}));const li=data.length-1;svg.appendChild(el("circle",{cx:x(li),cy:y(data[li]),r:2.6,fill:stroke}));}
+
+  /* ---- TABS ---- */
+  const TABS=[
+    {k:"g1",c:"01",n:"Gerência 1",s:"288 mil un./d",st:"ok"},
+    {k:"g2",c:"02",n:"Gerência 2",s:"412 mil un./d",st:"ok"},
+    {k:"g3",c:"03",n:"Gerência 3",s:"96.1% efic.",st:"warn"},
+    {k:"g4",c:"04",n:"Gerência 4",s:"42 rotas",st:"ok"},
+    {k:"g5",c:"05",n:"Gerência 5",s:"7 O.S. atras.",st:"crit"},
+    {k:"g6",c:"06",n:"Gerência 6",s:"96 veículos",st:"ok"},
+    {k:"g7",c:"07",n:"Gerência 7",s:"12.4 dias cob.",st:"warn"},
+    {k:"g8",c:"08",n:"Gerência 8",s:"312 dias s/ acid.",st:"ok"},
+  ];
+  function renderTabs(active){
+    document.getElementById("mTabs").innerHTML=TABS.map(t=>`
+      <div class="m-chip ${t.k===active?'on':''}" data-g="${t.k}">
+        <div class="ct"><span class="cc">${t.c}</span><span class="cn">${t.n}</span><span class="cd st-${t.st}"></span></div>
+      </div>`).join("");
+  }
+
+  /* ---- KPIs ---- */
+  function renderKpis(kpis){
+    const grid=document.getElementById("mKpis");
+    // Packing: cards seg ocupam 2 colunas; nunca deixar espaço vazio —
+    // se um card de 1 coluna ficar sozinho na linha, ele é esticado p/ preencher.
+    const spans=kpis.map(k=>k.variant==="seg"?2:1);
+    let col=0;
+    for(let i=0;i<spans.length;i++){
+      if(spans[i]===2){ if(col===1){ spans[i-1]=2; } col=0; }
+      else { col = col===1?0:1; }
+    }
+    if(col===1) spans[spans.length-1]=2;
+    grid.innerHTML=kpis.map((k,i)=>{
+      let body;
+      if(k.variant==="spark"){
+        body=`<div class="kf"><span class="delta ${k.delta.tone}">${k.delta.dir==="up"?arrU:arrD}${k.delta.val}</span><span class="kc">${k.cmp}</span></div><svg class="spark" data-spark="${k.spark.join(",")}" data-color="${k.color}"></svg>`;
+      }else{
+        const bars=k.seg.map(s=>`<span style="flex:${s.flex};background:var(--${s.color})"></span>`).join("");
+        const leg=k.seg.map(s=>`<span><i style="background:var(--${s.color})"></i>${s.label}</span>`).join("");
+        body=`<div class="segb">${bars}</div><div class="segl">${leg}</div>`;
+      }
+      const span = spans[i]===2 ? " span2" : "";
+      const isHoriz = spans[i]===2 && k.variant==="spark";
+      const pre=k.pre?`<span class="pre">${k.pre}</span>`:"";
+      if(isHoriz){
+        return `<article class="m-kpi${span} kpi-h">
+          <div class="kpi-left">
+            <div class="kl"><span class="ki ico-${k.tone}">${svgIco(k.ico)}</span>${k.label}</div>
+            <div class="kv num">${pre}${k.value}<span class="u">${k.unit}</span></div>
+            <div class="kf"><span class="delta ${k.delta.tone}">${k.delta.dir==="up"?arrU:arrD}${k.delta.val}</span><span class="kc">${k.cmp}</span></div>
+          </div>
+          <div class="kpi-right"><svg class="spark" data-spark="${k.spark.join(",")}" data-color="${k.color}"></svg></div>
+        </article>`;
+      }
+      return `<article class="m-kpi${span}">
+        <div class="kl"><span class="ki ico-${k.tone}">${svgIco(k.ico)}</span>${k.label}</div>
+        <div class="kv num">${pre}${k.value}<span class="u">${k.unit}</span></div>${body}</article>`;
+    }).join("");
+    grid.querySelectorAll("[data-spark]").forEach(s=>spark(s,s.getAttribute("data-spark").split(",").map(Number),s.getAttribute("data-color")));
+  }
+
+  /* ---- shared ---- */
+  const ph=(t,s)=>`<div class="m-ph"><div class="pt">${t}</div><div class="ps">${s}</div></div>`;
+  const hint=`<div class="m-hint">${swipe}Deslize para ver todo o período</div>`;
+  function foot(items){return `<div class="m-foot">${items.slice(0,4).map(f=>`<div class="sc"><b class="num" ${f.c?`style="color:var(--${f.c})"`:""}>${f.b}</b><span>${f.s}</span></div>`).join("")}</div>`;}
+
+  /* ---- combo ---- */
+  function drawCombo(svg,cfg,w,h){
+    svg.setAttribute("viewBox",`0 0 ${w} ${h}`);svg.innerHTML="";
+    const mL=40,mR=cfg.right?44:14,mT=14,mB=26,pW=w-mL-mR,pH=h-mT-mB,L=cfg.left,R=cfg.right;
+    const yL=v=>mT+pH-(v-L.min)/(L.max-L.min)*pH,yR=v=>mT+pH-(v-R.min)/(R.max-R.min)*pH,sX=i=>mL+(i+.5)/MESES.length*pW;
+    const line=C("--line"),line2=C("--line-2"),ink3=C("--ink-3"),ink4=C("--ink-4");
+    for(let v=L.min;v<=L.max;v+=L.step){const yy=yL(v);svg.appendChild(el("line",{x1:mL,y1:yy,x2:w-mR,y2:yy,stroke:v===L.min?line:line2,"stroke-width":1}));const t=el("text",{x:mL-8,y:yy+4,"text-anchor":"end",fill:ink4,"font-size":10});t.textContent=v>=1000?(v/1000)+"k":v;svg.appendChild(t);}
+    if(R){const rc=baseColor(R.color);for(let v=R.min;v<=R.max;v+=R.step){const t=el("text",{x:w-mR+8,y:yR(v)+4,"text-anchor":"start",fill:rc,"font-size":10,"fill-opacity":.85});t.textContent=v+R.suffix;svg.appendChild(t);}}
+    const nB=cfg.bars.length,slot=pW/MESES.length;
+    if(cfg.ghost&&nB===1){const gw=Math.min(22,slot*.5);MESES.forEach((m,i)=>{const gy=yL(cfg.ghost.data[i]);svg.appendChild(el("rect",{x:sX(i)-gw/2,y:gy,width:gw,height:mT+pH-gy,rx:3,fill:line2}));});}
+    cfg.bars.forEach((b,bi)=>{const grp=nB>1,bw=grp?Math.min(11,slot*.28):Math.min(18,slot*.42),gap=3,gW=grp?bw*nB+gap*(nB-1):bw,fill=GRAD[b.color]?gradId(svg,b.color):baseColor(b.color);MESES.forEach((m,i)=>{const cx=sX(i),x=grp?cx-gW/2+bi*(bw+gap):cx-bw/2,by=yL(b.data[i]);svg.appendChild(el("rect",{x,y:by,width:bw,height:mT+pH-by,rx:2.5,fill}));});});
+    MESES.forEach((m,i)=>{const t=el("text",{x:sX(i),y:h-9,"text-anchor":"middle",fill:ink3,"font-size":10});t.textContent=m;svg.appendChild(t);});
+    if(cfg.ghost){const gc=baseColor(cfg.ghost.color);let d="";cfg.ghost.data.forEach((v,i)=>d+=(i?"L":"M")+sX(i).toFixed(1)+" "+yL(v).toFixed(1)+" ");svg.appendChild(el("path",{d:d.trim(),fill:"none",stroke:gc,"stroke-width":2,"stroke-dasharray":cfg.ghost.dashed?"5 4":"0"}));}
+    cfg.lines.forEach(ln=>{const c=baseColor(ln.color),yf=ln.axis==="right"?yR:yL;let d="";ln.data.forEach((v,i)=>d+=(i?"L":"M")+sX(i).toFixed(1)+" "+yf(v).toFixed(1)+" ");svg.appendChild(el("path",{d:d.trim(),fill:"none",stroke:c,"stroke-width":2.2,"stroke-dasharray":ln.dashed?"5 4":"0","stroke-linejoin":"round"}));ln.data.forEach((v,i)=>svg.appendChild(el("circle",{cx:sX(i),cy:yf(v),r:2.6,fill:"#fff",stroke:c,"stroke-width":1.8})));});
+  }
+  function mainCombo(d){
+    const cfg=d.chart;const items=[];
+    cfg.bars.forEach(b=>items.push(`<span class="lg"><span class="sw" style="background:${GRAD[b.color]?`linear-gradient(180deg,${C(GRAD[b.color][0])},${C(GRAD[b.color][1])})`:baseColor(b.color)}"></span>${b.label}</span>`));
+    if(cfg.ghost)items.push(`<span class="lg"><span class="ln" style="border-color:${baseColor(cfg.ghost.color)};${cfg.ghost.dashed?"border-top-style:dashed":""}"></span>${cfg.ghost.label}</span>`);
+    cfg.lines.forEach(ln=>items.push(`<span class="lg"><span class="ln" style="border-color:${baseColor(ln.color)};${ln.dashed?"border-top-style:dashed":""}"></span>${ln.label}</span>`));
+    return `<div class="m-card">${ph(cfg.title,cfg.sub)}<div class="m-legend">${items.join("")}</div>
+      <div class="m-hscroll"><svg style="width:560px;height:248px;display:block"></svg></div>${hint}${foot(cfg.foot)}</div>`;
+  }
+
+  /* ---- area ---- */
+  function drawArea(svg,cfg,w,h){
+    svg.setAttribute("viewBox",`0 0 ${w} ${h}`);svg.innerHTML="";
+    const n=cfg.series[0].data.length,mL=38,mR=14,mT=14,mB=24,pW=w-mL-mR,pH=h-mT-mB,L=cfg.left;
+    const yL=v=>mT+pH-(v-L.min)/(L.max-L.min)*pH,X=i=>mL+i/(n-1)*pW;
+    const line=C("--line"),line2=C("--line-2"),ink4=C("--ink-4");
+    for(let v=L.min;v<=L.max;v+=L.step){const yy=yL(v);svg.appendChild(el("line",{x1:mL,y1:yy,x2:w-mR,y2:yy,stroke:v===L.min?line:line2,"stroke-width":1}));const t=el("text",{x:mL-7,y:yy+4,"text-anchor":"end",fill:ink4,"font-size":10});t.textContent=v+(L.suffix||"");svg.appendChild(t);}
+    const cum=new Array(n).fill(L.min);
+    cfg.series.forEach((s,si)=>{const col=baseColor(s.color),top=s.data.map((v,i)=>cum[i]+v),bot=cum.slice();
+      let pth=`M${X(0).toFixed(1)} ${yL(top[0]).toFixed(1)} `+top.map((v,i)=>`L${X(i).toFixed(1)} ${yL(v).toFixed(1)}`).join(" ")+" "+bot.map((v,i)=>`L${X(n-1-i).toFixed(1)} ${yL(bot[n-1-i]).toFixed(1)}`).join(" ")+" Z";
+      const id="a"+si,g=el("linearGradient",{id,x1:0,y1:0,x2:0,y2:1});g.appendChild(el("stop",{offset:0,"stop-color":col,"stop-opacity":.42}));g.appendChild(el("stop",{offset:1,"stop-color":col,"stop-opacity":.12}));const df=el("defs");df.appendChild(g);svg.appendChild(df);
+      svg.appendChild(el("path",{d:pth,fill:`url(#${id})`}));let ld="";top.forEach((v,i)=>ld+=(i?"L":"M")+X(i).toFixed(1)+" "+yL(v).toFixed(1)+" ");svg.appendChild(el("path",{d:ld.trim(),fill:"none",stroke:col,"stroke-width":2.2,"stroke-linejoin":"round"}));for(let i=0;i<n;i++)cum[i]=top[i];});
+    const step=(n-1)/(cfg.xcats.length-1);cfg.xcats.forEach((c,k)=>{const i=Math.round(k*step);const t=el("text",{x:X(i),y:h-8,"text-anchor":"middle",fill:C("--ink-3"),"font-size":10});t.textContent=c;svg.appendChild(t);});
+  }
+  function mainArea(d){
+    const cfg=d.main;
+    return `<div class="m-card">${ph(cfg.title,cfg.sub)}
+      <div class="m-legend">${cfg.series.map(s=>`<span class="lg"><span class="sw" style="background:${baseColor(s.color)}"></span>${s.label}</span>`).join("")}</div>
+      <div class="m-hscroll"><svg style="width:520px;height:238px;display:block"></svg></div>${hint}${foot(cfg.foot)}</div>`;
+  }
+
+  /* ---- matrix ---- */
+  function mainMatrix(d){
+    const cfg=d.main;const zone=(r,c)=>{const s=(2-r)+c;return s<=1?"low":s===2?"mid":s===3&&c<2?"mid":"high";};
+    let g="";cfg.cells.forEach((row,r)=>{g+=`<div class="m-mxrl">${cfg.ycats[r]}</div>`;row.forEach((v,c)=>{g+=`<div class="m-mxcell mx-z-${zone(r,c)}"><b class="num">${v}</b><span>O.S.</span></div>`;});});
+    g+=`<div></div>`+cfg.xcats.map(x=>`<div class="m-mxcl">${x}</div>`).join("")+`<div class="m-mxx">${cfg.xlabel} →</div>`;
+    return `<div class="m-card">${ph(cfg.title,cfg.sub)}
+      <div class="m-mx"><div class="m-mxplot"><div class="m-mxy">${cfg.ylabel} ↑</div><div class="m-mxgrid">${g}</div></div>
+      <div class="m-mxscale"><span><i style="background:var(--success)"></i>Controlado</span><span><i style="background:var(--amber)"></i>Atenção</span><span><i style="background:var(--coral)"></i>Crítico</span></div></div>
+      ${foot(cfg.foot)}</div>`;
+  }
+
+  /* ---- sankey ---- */
+  function drawSankey(svg,cfg,w,h){
+    svg.setAttribute("viewBox",`0 0 ${w} ${h}`);svg.innerHTML="";
+    const mT=24,mB=12,pH=h-mT-mB,srcX=12,nodeW=18,srcR=srcX+nodeW,labelW=150,destX=w-labelW-nodeW,n=cfg.flows.length,gap=11,availH=pH-gap*(n-1),midx=(srcR+destX)/2;
+    svg.appendChild(el("rect",{x:srcX,y:mT,width:nodeW,height:pH,rx:4,fill:C("--brand")}));
+    const sl=el("text",{x:srcX,y:mT-9,fill:C("--ink"),"font-size":11,"font-weight":700});sl.textContent=cfg.source.label.toUpperCase();svg.appendChild(sl);
+    let sy=mT,dy=mT;
+    cfg.flows.forEach(f=>{const sh=f.pct/100*pH,dh=f.pct/100*availH,col=baseColor(f.color),sy0=sy,sy1=sy+sh,dy0=dy,dy1=dy+dh;
+      svg.appendChild(el("path",{d:`M${srcR} ${sy0.toFixed(1)} C${midx} ${sy0.toFixed(1)} ${midx} ${dy0.toFixed(1)} ${destX} ${dy0.toFixed(1)} L${destX} ${dy1.toFixed(1)} C${midx} ${dy1.toFixed(1)} ${midx} ${sy1.toFixed(1)} ${srcR} ${sy1.toFixed(1)} Z`,fill:col,"fill-opacity":.42}));
+      svg.appendChild(el("rect",{x:destX,y:dy0,width:nodeW,height:dh,rx:3,fill:col}));
+      const mid=(dy0+dy1)/2;const nm=el("text",{x:destX+nodeW+10,y:mid-2,fill:C("--ink"),"font-size":11.5,"font-weight":600});nm.textContent=f.label;svg.appendChild(nm);
+      const vv=el("text",{x:destX+nodeW+10,y:mid+13,fill:C("--ink-3"),"font-size":10});vv.textContent=`${f.pct}% · ${f.val}`;svg.appendChild(vv);
+      sy=sy1;dy=dy1+gap;});
+  }
+  function mainSankey(d){const cfg=d.main;return `<div class="m-card">${ph(cfg.title,cfg.sub)}<div class="m-hscroll"><svg style="width:540px;height:268px;display:block"></svg></div>${hint}${foot(cfg.foot)}</div>`;}
+
+  /* ---- side: donut ---- */
+  function sideDonut(d){const dd=d.donut;return `<div class="m-card">${ph(dd.title,dd.sub)}
+    <div class="m-donut-h">
+      <svg></svg>
+      <div class="d-info">
+        <span class="dlbl">${dd.sideLbl}</span>
+        <span class="dval num">${dd.sideVal}</span>
+        <span class="delta ${dd.delta.tone}" style="margin-top:4px">${dd.delta.dir==="up"?arrU:arrD}${dd.delta.val}</span>
+      </div>
+    </div>
+    <div class="m-complist">${dd.segs.map(s=>`<div class="m-comprow"><span class="dc" style="background:var(--${s.color})"></span><span class="nm">${s.nm}</span><span class="vv num">${s.vv}</span><span class="pp num">${s.pp}%</span></div>`).join("")}</div></div>`;}
+  function drawDonut(svg,dd){const cx=64,cy=64,r=48,sw=18,circ=2*Math.PI*r;svg.setAttribute("viewBox","0 0 128 128");svg.innerHTML="";svg.appendChild(el("circle",{cx,cy,r,fill:"none",stroke:C("--surface-3"),"stroke-width":sw}));let off=0;dd.segs.forEach(s=>{const len=s.pp/100*circ;svg.appendChild(el("circle",{cx,cy,r,fill:"none",stroke:C("--"+s.color),"stroke-width":sw,"stroke-dasharray":`${len-2} ${circ-len+2}`,"stroke-dashoffset":-off,transform:`rotate(-90 ${cx} ${cy})`}));off+=len;});const t1=el("text",{x:cx,y:cy-1,"text-anchor":"middle",fill:C("--ink"),"font-size":22,"font-weight":800});t1.textContent=dd.center;svg.appendChild(t1);const t2=el("text",{x:cx,y:cy+15,"text-anchor":"middle",fill:C("--ink-3"),"font-size":10});t2.textContent=dd.centerSub;svg.appendChild(t2);}
+
+  /* ---- side: table (bad actors) ---- */
+  function sideTable(d){const s=d.side;return `<div class="m-card">${ph(s.title,s.sub)}
+    <div class="m-bt">${s.rows.map((r,i)=>`<div class="m-btc"><div class="m-bttop"><span class="m-btr">${i+1}</span><span class="m-btn"><b>${r.nm}</b><span>${r.sub}</span></span><span class="m-btv"><b class="num">${r.val}</b><span>${r.h}</span></span></div><div class="m-btbar"><i style="width:${r.bar}%;background:var(--${r.tone})"></i></div></div>`).join("")}</div></div>`;}
+
+  /* ---- side: groupbars ---- */
+  function sideGroup(d){const cfg=d.side;return `<div class="m-card">${ph(cfg.title,cfg.sub)}
+    <div class="m-legend">${cfg.series.map(s=>`<span class="lg"><span class="sw" style="background:${baseColor(s.color)}"></span>${s.label}</span>`).join("")}</div>
+    <div style="padding:0 12px 4px"><svg class="gbsvg" style="width:100%;height:200px;display:block"></svg></div>
+    <div class="m-note"><span class="dot"></span>${cfg.note}</div></div>`;}
+  function drawGroup(svg,cfg){const w=svg.clientWidth||340,h=200;svg.setAttribute("viewBox",`0 0 ${w} ${h}`);svg.innerHTML="";const mL=34,mR=10,mT=10,mB=24,pW=w-mL-mR,pH=h-mT-mB,L=cfg.left;const yL=v=>mT+pH-(v-L.min)/(L.max-L.min)*pH,line=C("--line"),line2=C("--line-2"),ink4=C("--ink-4");
+    for(let v=L.min;v<=L.max;v+=L.step){const yy=yL(v);svg.appendChild(el("line",{x1:mL,y1:yy,x2:w-mR,y2:yy,stroke:v===L.min?line:line2,"stroke-width":1}));const t=el("text",{x:mL-7,y:yy+4,"text-anchor":"end",fill:ink4,"font-size":9.5});t.textContent=v;svg.appendChild(t);}
+    const nc=cfg.cats.length,slot=pW/nc,ns=cfg.series.length,bw=Math.min(15,slot*.26),gap=4,gW=bw*ns+gap*(ns-1);
+    cfg.cats.forEach((cat,ci)=>{const cx=mL+(ci+.5)*slot;cfg.series.forEach((s,si)=>{const x=cx-gW/2+si*(bw+gap),by=yL(s.data[ci]);svg.appendChild(el("rect",{x,y:by,width:bw,height:mT+pH-by,rx:2.5,fill:baseColor(s.color)}));});const t=el("text",{x:cx,y:h-8,"text-anchor":"middle",fill:C("--ink-3"),"font-size":10});t.textContent=cat;svg.appendChild(t);});}
+
+  /* ---- side: radar ---- */
+  function sideRadar(d){const cfg=d.side;return `<div class="m-card">${ph(cfg.title,cfg.sub)}
+    <div style="padding:4px 10px 0"><svg class="rdsvg" style="width:100%;height:240px;display:block"></svg></div>
+    <div class="m-note"><span class="dot"></span>${cfg.note}</div></div>`;}
+  function drawRadar(svg,cfg){const w=svg.clientWidth||340,h=240;svg.setAttribute("viewBox",`0 0 ${w} ${h}`);svg.innerHTML="";const cx=w/2,cy=h/2-2,R=76,n=cfg.axes.length,ang=i=>-Math.PI/2+i*2*Math.PI/n,pt=(i,rad)=>[cx+rad*Math.cos(ang(i)),cy+rad*Math.sin(ang(i))];
+    [0.25,0.5,0.75,1].forEach(f=>{let p="";for(let i=0;i<n;i++){const[x,y]=pt(i,R*f);p+=(i?"L":"M")+x.toFixed(1)+" "+y.toFixed(1)+" ";}p+="Z";svg.appendChild(el("path",{d:p,fill:"none",stroke:C("--line"),"stroke-width":1}));});
+    for(let i=0;i<n;i++){const[x,y]=pt(i,R);svg.appendChild(el("line",{x1:cx,y1:cy,x2:x,y2:y,stroke:C("--line-2"),"stroke-width":1}));}
+    let np="";for(let i=0;i<n;i++){const[x,y]=pt(i,R*cfg.norma/100);np+=(i?"L":"M")+x.toFixed(1)+" "+y.toFixed(1)+" ";}np+="Z";svg.appendChild(el("path",{d:np,fill:"none",stroke:C("--amber-d"),"stroke-width":1.5,"stroke-dasharray":"4 3"}));
+    const col=baseColor(cfg.series.color);let sp="";for(let i=0;i<n;i++){const[x,y]=pt(i,R*cfg.series.data[i]/100);sp+=(i?"L":"M")+x.toFixed(1)+" "+y.toFixed(1)+" ";}sp+="Z";svg.appendChild(el("path",{d:sp,fill:col,"fill-opacity":.16,stroke:col,"stroke-width":2,"stroke-linejoin":"round"}));for(let i=0;i<n;i++){const[x,y]=pt(i,R*cfg.series.data[i]/100);svg.appendChild(el("circle",{cx:x,cy:y,r:2.8,fill:"#fff",stroke:col,"stroke-width":1.8}));}
+    for(let i=0;i<n;i++){const[x,y]=pt(i,R+13),a=ang(i),anchor=Math.abs(Math.cos(a))<.3?"middle":(Math.cos(a)>0?"start":"end");const t=el("text",{x:x.toFixed(1),y:(y+3).toFixed(1),"text-anchor":anchor,fill:C("--ink-2"),"font-size":9,"font-weight":600});t.textContent=cfg.axes[i];svg.appendChild(t);}}
+
+  /* ---- gantt → milestone list ---- */
+  const monthAt=p=>p<25?"Mai":p<50?"Jun":p<75?"Jul":"Ago";
+  function rowStatus(rw){
+    const s=rw.bar.segs, pct=rw.bar.pct;
+    if(s.some(x=>x.t==="late")) return {cls:"b-late",label:"Atrasado",dot:"var(--coral)",fill:"coral"};
+    if(s.length&&s.every(x=>x.t==="plan")) return {cls:"b-plan",label:"Planejado",dot:"var(--surface-3)",fill:"line-strong"};
+    if(/^100%/.test(pct)) return {cls:"b-done",label:"Concluído",dot:"var(--success)",fill:"success"};
+    if(s.some(x=>x.t==="warn")) return {cls:"b-warn",label:"Atenção",dot:"var(--amber)",fill:"amber"};
+    return {cls:"b-prog",label:"Em execução",dot:"var(--brand)",fill:"brand"};
+  }
+  function fillOf(rw){
+    const m=rw.bar.pct.match(/^(\d+)%/); if(m) return +m[1];
+    if(/planejado/i.test(rw.bar.pct)) return 0;
+    const done=rw.bar.segs.filter(x=>x.t==="done").reduce((a,x)=>a+x.w,0);
+    const prog=rw.bar.segs.filter(x=>x.t==="prog").reduce((a,x)=>a+x.w,0);
+    return Math.min(100,Math.round(done+prog*0.5));
+  }
+  function renderGantt(g){
+    const items=g.rows.map(rw=>{
+      const st=rowStatus(rw), fill=fillOf(rw);
+      const start=monthAt(rw.bar.left), end=monthAt(Math.min(rw.bar.left+rw.bar.width,99));
+      const period=start===end?start:start+" – "+end;
+      return `<div class="m-ms">
+        <div class="m-ms-rail"><span class="m-ms-dot" style="background:${st.dot}"></span></div>
+        <div class="m-ms-card">
+          <div class="m-ms-top"><span class="m-ms-tt"><span class="m-ms-ico ico-${rw.tone}">${svgIco(rw.ico)}</span><b>${rw.title}</b></span><span class="m-ms-badge ${st.cls}">${st.label}</span></div>
+          <div class="m-ms-meta">${rw.sub} · ${period} · resp. ${rw.own}</div>
+          <div class="m-ms-prog"><div class="bar"><i style="width:${fill}%;background:var(--${st.fill})"></i></div><span class="pct${rw.bar.pctBad?' bad':''}">${rw.bar.pct}</span></div>
+        </div>
+      </div>`;
+    }).join("");
+    document.getElementById("mGantt").innerHTML=`${ph(g.title,g.sub)}
+      <div class="m-mscap"><span class="pchip">Mai – Ago 2026</span>${g.rows.length} marcos operacionais</div>
+      <div class="m-mslist">${items}</div>`;
+  }
+
+  /* ---- orchestration ---- */
+  const MAIN={combo:mainCombo,area:mainArea,matrix:mainMatrix,sankey:mainSankey};
+  const SIDE={donut:sideDonut,table:sideTable,groupbars:sideGroup,radar:sideRadar};
+
+  function draw(d){
+    // post-inject SVG drawing for whichever type rendered
+    const mt=(d.main&&d.main.type)||"combo", st=(d.side&&d.side.type)||"donut";
+    const mainCard=document.getElementById("mMain"), sideCard=document.getElementById("mSide");
+    if(mt==="combo") drawCombo(mainCard.querySelector("svg"),d.chart,560,248);
+    else if(mt==="area") drawArea(mainCard.querySelector("svg"),d.main,520,238);
+    else if(mt==="sankey") drawSankey(mainCard.querySelector("svg"),d.main,540,268);
+    if(st==="donut") drawDonut(sideCard.querySelector(".m-donut-h svg, .m-donut svg"),d.donut);
+    else if(st==="groupbars") drawGroup(sideCard.querySelector(".gbsvg"),d.side);
+    else if(st==="radar") drawRadar(sideCard.querySelector(".rdsvg"),d.side);
+  }
+
+  let CURD=null;
+  function renderAll(key){
+    const d=window.DATA[key]; CURD=d;
+    renderTabs(key);
+    document.querySelector(".m-htxt .ctx").textContent=d.context;
+    renderKpis(d.kpis);
+    const mt=(d.main&&d.main.type)||"combo", st=(d.side&&d.side.type)||"donut";
+    document.getElementById("mAcc").innerHTML=`
+      <section class="m-accs open" id="acc2">
+        <button class="m-accs-h" type="button"><span class="nm">Análise Central</span><span class="ln"></span><span class="n">02</span>${chevAcc}</button>
+        <div class="m-acc-b"><div class="m-acc-inner"><div id="mMain"></div><div id="mSide"></div></div></div>
+      </section>
+      <section class="m-accs" id="acc3">
+        <button class="m-accs-h" type="button"><span class="nm">Linha do Tempo</span><span class="ln"></span><span class="n">03</span>${chevAcc}</button>
+        <div class="m-acc-b"><div class="m-acc-inner"><section class="m-card m-gantt" id="mGantt"></section></div></div>
+      </section>`;
+    document.getElementById("mMain").innerHTML=(MAIN[mt]||mainCombo)(d);
+    document.getElementById("mSide").innerHTML=(SIDE[st]||sideDonut)(d);
+    renderGantt(d.gantt);
+    draw(d);
+    wireTabs();
+    wireAcc();
+  }
+  function wireAcc(){
+    document.querySelectorAll(".m-accs-h").forEach(h=>h.addEventListener("click",()=>{
+      const sec=h.closest(".m-accs"), wasOpen=sec.classList.contains("open");
+      sec.classList.toggle("open");
+      if(!wasOpen && CURD) setTimeout(()=>draw(CURD),300);
+    }));
+  }
+  function scrollChip(c, smooth){
+    const tabs=document.getElementById("mTabs");
+    const idx=[...tabs.children].indexOf(c);
+    const beh=smooth?"smooth":"auto";
+    if(idx<=1){ tabs.scrollTo({left:0,behavior:beh}); }
+    else { c.scrollIntoView({inline:"center",block:"nearest",behavior:beh}); }
+  }
+  function wireTabs(){
+    document.querySelectorAll(".m-chip").forEach(c=>c.addEventListener("click",()=>{
+      const k=c.getAttribute("data-g"); if(!window.DATA[k]||c.classList.contains("on"))return;
+      const stage=document.getElementById("mStage"); stage.classList.add("swap");
+      scrollChip(c, true);
+      setTimeout(()=>{renderAll(k);stage.classList.remove("swap");},230);
+    }));
+  }
+  function init(){
+    const p=new URLSearchParams(location.search).get("g");
+    const key=(p&&window.DATA[p])?p:(document.body.getAttribute("data-g")||"g1");
+    renderAll(key);
+    // posiciona a aba ativa respeitando o padding lateral
+    const on=document.querySelector(".m-chip.on"); if(on) scrollChip(on, false);
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",init); else init();
+})();
+
+</script>
+</body>
+</html>
